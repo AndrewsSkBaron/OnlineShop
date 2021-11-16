@@ -2,53 +2,37 @@ package com.onlineStore.coherent;
 
 import com.github.javafaker.Faker;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-
 public class RandomStorePopulator {
-    public static Store getStore() {
+    private String randomNameBeer;
+    private String randomNameBook;
+    private String randomNameMedicine;
+    private int randomRate;
+    private int randomPrice;
+
     Faker faker = new Faker();
-    Map<Category, List<Product>> categoryMap = new HashMap<>();
 
+    public String getRandomNameBeer() {
+        randomNameBeer = faker.beer().name();
+        return randomNameBeer;
+    }
 
-    //Category Beer
-    categoryMap.put(new Category("Beer"), Arrays.asList(
-            new Product(faker.beer().name(), faker.number().numberBetween(1, 10), faker.number().numberBetween(100, 1500)),
-            new Product(faker.beer().name(), faker.number().numberBetween(1, 10), faker.number().numberBetween(100, 1500)),
-            new Product(faker.beer().name(),  faker.number().numberBetween(1, 10), faker.number().numberBetween(100, 1500))
-    ));
+    public String getRandomNameBook() {
+        randomNameBook = faker.book().title();
+        return randomNameBook;
+    }
 
-    //Category Book
-    categoryMap.put(new Category("Book"), Arrays.asList(
-            new Product(faker.book().title(),  faker.number().numberBetween(1, 10), faker.number().numberBetween(100, 1500)),
-            new Product(faker.book().title(),  faker.number().numberBetween(1, 10), faker.number().numberBetween(100, 1500)),
-            new Product(faker.book().title(),  faker.number().numberBetween(1, 10), faker.number().numberBetween(100, 1500))
-    ));
+    public String getRandomNameMedicine() {
+        randomNameMedicine = faker.medical().medicineName();
+        return randomNameMedicine;
+    }
 
-    //Category Medicine
-    categoryMap.put(new Category("Medicine"), Arrays.asList(
-            new Product(faker.medical().medicineName(), faker.number().numberBetween(1, 10), faker.number().numberBetween(100, 1500)),
-            new Product(faker.medical().medicineName(), faker.number().numberBetween(1, 10), faker.number().numberBetween(100, 1500)),
-            new Product(faker.medical().medicineName(), faker.number().numberBetween(1, 10), faker.number().numberBetween(100, 1500))
-    ));
+    public int getRandomRate() {
+        randomRate = faker.number().numberBetween(1, 10);
+        return randomRate;
+    }
 
-/*          System.out.println("personMap: " + categoryMap.toString());
-            System.out.println();
-            System.out.println("personMap.keySet(): " + categoryMap.keySet().toString());
-            System.out.println();
-        for(Category category : categoryMap.keySet()){
-                System.out.println(category.toString() + " имеет");
-                System.out.println();
-            for (Product product : categoryMap.get(category)){
-                    System.out.println("  " + product.toString());
-                    System.out.println();
-            }
-        }*/
-    Store store = new Store(categoryMap);
-
-    return store;
-}
+    public int getRandomPrice() {
+        randomPrice = faker.number().numberBetween(100, 1500);
+        return randomPrice;
+    }
 }

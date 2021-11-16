@@ -1,16 +1,24 @@
 package com.onlineStore.coherent;
 
-import java.util.List;
-import java.util.Map;
+import java.util.ArrayList;
 
 public class Store {
-    private Map<Category, List<Product>> category;
-
-    public Store(Map<Category, List<Product>> category) {
-        this.category = category;
+    private ArrayList cat = new ArrayList<>();
+    private Category category = new Category();
+    public void getCat() {
+        cat.add(category.getCategoryBear());
+        cat.add(category.getCategoryBook());
+        cat.add(category.getCategoryMedicine());
+        category.getProduct();
+        System.out.println(cat);
     }
 
-    public Map<Category, List<Product>> getCategory() {
-        return category;
+
+
+    @Override
+    public String toString() {
+        return "Store{" +
+                "cat=" + cat +
+                '}';
     }
 }

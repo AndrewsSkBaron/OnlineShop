@@ -1,18 +1,32 @@
 package com.onlineStore.coherent;
 
 public class Category {
-    String name;
+    private String categoryName;
+    private Book book = new Book();
+    private Beer beer = new Beer();
+    private Medicine medicine = new Medicine();
 
-    public Category(String name) {
-        this.name = name;
+
+    public String getCategoryBear() {
+        categoryName = "Beer";
+        return categoryName;
+    }
+    public String getCategoryBook() {
+        categoryName = "Book";
+        return categoryName;
+    }
+    public String getCategoryMedicine() {
+        categoryName = "Medicine";
+        return categoryName;
     }
 
-    public String getName() {
-        return name;
-    }
+    public void getProduct() {
+        book.putProductsInArray();
+        beer.putProductsInArray();
+        medicine.putProductsInArray();
 
-    @Override
-    public String toString() {
-        return "Category '" + name + '\'';
+        System.out.println(book);
+        System.out.println(beer);
+        System.out.println(medicine);
     }
 }
