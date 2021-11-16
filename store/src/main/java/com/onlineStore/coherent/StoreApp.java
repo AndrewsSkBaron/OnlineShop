@@ -6,6 +6,8 @@ import java.util.Map;
 public class StoreApp {
 
     public static void main(String[] args) {
+        System.out.println("Hi");
+
         Store store = RandomStorePopulator.getStore();
         Map<Category, List<Product>> catMap = store.getCategory();
 
