@@ -14,6 +14,7 @@ public class Medicine {
         }
     }
 
+
     @Override
     public String toString() {
         return "Medicine{" +
