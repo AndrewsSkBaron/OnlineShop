@@ -1,34 +1,34 @@
 package com.onlineStore.coherent;
 
 public class Product {
-    private String nameProduct;
-    private int rateProduct;
-    private int priceProduct;
+    private String name;
+    private int rate;
+    private int price;
 
-    public Product(String nameProduct, int rateProduct, int priceProduct) {
-        this.nameProduct = nameProduct;
-        this.rateProduct = rateProduct;
-        this.priceProduct = priceProduct;
+    public Product(String name, int rate, int price) {
+        this.name = name;
+        this.rate = rate;
+        this.price = price;
     }
 
-    public String getNameProduct() {
-        return nameProduct;
+    public String getName() {
+        return name;
     }
 
-    public int getRateProduct() {
-        return rateProduct;
+    public int getRate() {
+        return rate;
     }
 
-    public int getPriceProduct() {
-        return priceProduct;
+    public int getPrice() {
+        return price;
     }
 
     @Override
     public String toString() {
-        return "\n " + "Product{" +
-                "nameProduct='" + nameProduct + '\'' +
-                ", rateProduct=" + rateProduct +
-                ", priceProduct=" + priceProduct +
+        return "Product { " +
+                "name = '" + name + '\'' +
+                ", rate = " + rate +
+                ", price = " + price + " " +
                 '}';
     }
 }

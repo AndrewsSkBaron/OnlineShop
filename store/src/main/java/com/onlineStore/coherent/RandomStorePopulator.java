@@ -2,37 +2,44 @@ package com.onlineStore.coherent;
 
 import com.github.javafaker.Faker;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RandomStorePopulator {
-    private String randomNameBeer;
-    private String randomNameBook;
-    private String randomNameMedicine;
-    private int randomRate;
-    private int randomPrice;
+    public Store getRandomStore(int count) {
+        Faker faker = new Faker();
 
-    Faker faker = new Faker();
+        List<Product> productsOfBooks = new ArrayList<>();
+        List<Product> productsOfBeers = new ArrayList<>();
+        List<Product> productsOfMedicines = new ArrayList<>();
 
-    public String getRandomNameBeer() {
-        randomNameBeer = faker.beer().name();
-        return randomNameBeer;
-    }
+        List<Category> categories = new ArrayList<>();
 
-    public String getRandomNameBook() {
-        randomNameBook = faker.book().title();
-        return randomNameBook;
-    }
+        Category book = new Book("Book", productsOfBooks);
+        Category beer = new Beer("Beer",  productsOfBeers);
+        Category medicine = new Medicine("Medicine",  productsOfMedicines);
 
-    public String getRandomNameMedicine() {
-        randomNameMedicine = faker.medical().medicineName();
-        return randomNameMedicine;
-    }
+        for (int i = 0; i < count; i++) {
+            productsOfBooks.add(new Product(faker.book().title(), faker.number().numberBetween(1, 10), faker.number().numberBetween(1, 1000)));
+            productsOfBeers.add(new Product(faker.beer().name(), faker.number().numberBetween(1, 10), faker.number().numberBetween(1, 1000)));
+            productsOfMedicines.add(new Product(faker.medical().medicineName(), faker.number().numberBetween(1, 10), faker.number().numberBetween(1, 1000)));
+        }
 
-    public int getRandomRate() {
-        randomRate = faker.number().numberBetween(1, 10);
-        return randomRate;
-    }
+        categories.add(book);
+        categories.add(beer);
+        categories.add(medicine);
 
-    public int getRandomPrice() {
-        randomPrice = faker.number().numberBetween(100, 1500);
-        return randomPrice;
+        Store store = new Store(categories);
+
+        System.out.println(store);
+        for (Category category : categories) {
+            System.out.println(category.getCategoryName() + " have");
+            System.out.println();
+            for (Product product : category.getListOfProducts()) {
+                System.out.println("  " + product);
+                System.out.println();
+            }
+        }
+        return store;
     }
 }

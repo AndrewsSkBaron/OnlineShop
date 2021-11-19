@@ -1,24 +1,23 @@
 package com.onlineStore.coherent;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Store {
-    private ArrayList cat = new ArrayList<>();
-    private Category category = new Category();
-    public void getCat() {
-        cat.add(category.getCategoryBear());
-        cat.add(category.getCategoryBook());
-        cat.add(category.getCategoryMedicine());
-        category.getProduct();
-        System.out.println(cat);
+    private List<Category> categories;
+
+    public Store(List<Category> categories) {
+        this.categories = categories;
     }
 
-
+    public List<Category> getCategories() {
+        return categories;
+    }
 
     @Override
     public String toString() {
-        return "Store{" +
-                "cat=" + cat +
+        return "Store { " +
+                "categories = " + '\n'+ categories + '\n' +" " +
                 '}';
     }
 }

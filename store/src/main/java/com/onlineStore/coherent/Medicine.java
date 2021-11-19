@@ -1,23 +1,9 @@
 package com.onlineStore.coherent;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class Medicine {
-    ArrayList medicine = new ArrayList<>();
-    RandomStorePopulator faker = new RandomStorePopulator();
-
-    public void putProductsInArray() {
-        int[] array = new int[3];
-        array[0] = 1;
-        for (int i = 0; i < array.length; i++) {
-            medicine.add(new Product(faker.getRandomNameMedicine(), faker.getRandomRate(), faker.getRandomPrice()));
-        }
-    }
-
-    @Override
-    public String toString() {
-        return "Medicine{" +
-                "medicine=" + medicine +
-                '}';
+public class Medicine extends Category {
+    public Medicine(String categoryName, List<Product> listOfProducts) {
+        super(categoryName, listOfProducts);
     }
 }

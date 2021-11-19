@@ -1,32 +1,29 @@
 package com.onlineStore.coherent;
 
+import java.util.List;
+
 public class Category {
     private String categoryName;
-    private Book book = new Book();
-    private Beer beer = new Beer();
-    private Medicine medicine = new Medicine();
+    private List<Product> listOfProducts;
 
+    public Category(String categoryName, List<Product> listOfProducts) {
+        this.categoryName = categoryName;
+        this.listOfProducts = listOfProducts;
+    }
 
-    public String getCategoryBear() {
-        categoryName = "Beer";
-        return categoryName;
-    }
-    public String getCategoryBook() {
-        categoryName = "Book";
-        return categoryName;
-    }
-    public String getCategoryMedicine() {
-        categoryName = "Medicine";
+    public String getCategoryName() {
         return categoryName;
     }
 
-    public void getProduct() {
-        book.putProductsInArray();
-        beer.putProductsInArray();
-        medicine.putProductsInArray();
+    public List<Product> getListOfProducts() {
+        return listOfProducts;
+    }
 
-        System.out.println(book);
-        System.out.println(beer);
-        System.out.println(medicine);
+    @Override
+    public String toString() {
+        return "Category { " +
+                "categoryName=' " + categoryName + '\'' +
+                ", listOfProducts = " + '\n' + "   "+ listOfProducts + '\n' +
+                '}';
     }
 }
