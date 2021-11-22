@@ -6,14 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RandomStorePopulator {
+    Faker faker = new Faker();
+    List<Product> productsOfBooks = new ArrayList<>();
+    List<Product> productsOfBeers = new ArrayList<>();
+    List<Product> productsOfMedicines = new ArrayList<>();
+    List<Category> categories = new ArrayList<>();
+    Store store = new Store(categories);
+
     public Store getRandomStore(int count) {
-        Faker faker = new Faker();
-
-        List<Product> productsOfBooks = new ArrayList<>();
-        List<Product> productsOfBeers = new ArrayList<>();
-        List<Product> productsOfMedicines = new ArrayList<>();
-
-        List<Category> categories = new ArrayList<>();
 
         Category book = new Book("Book", productsOfBooks);
         Category beer = new Beer("Beer",  productsOfBeers);
@@ -29,8 +29,10 @@ public class RandomStorePopulator {
         categories.add(beer);
         categories.add(medicine);
 
-        Store store = new Store(categories);
+        return store;
+    }
 
+    public void printInfoOfStore() {
         System.out.println(store);
         for (Category category : categories) {
             System.out.println(category.getCategoryName() + " have");
@@ -40,6 +42,5 @@ public class RandomStorePopulator {
                 System.out.println();
             }
         }
-        return store;
     }
 }
