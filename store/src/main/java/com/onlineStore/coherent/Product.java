@@ -25,10 +25,11 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product{" +
+        return "Product { " +
                 "name = '" + name + '\'' +
                 ", rate = " + rate +
-                ", price = " + price + '$' +
+                ", price = " + price + " " +
                 '}';
     }
 }
+

@@ -2,53 +2,45 @@ package com.onlineStore.coherent;
 
 import com.github.javafaker.Faker;
 
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
 
 public class RandomStorePopulator {
-    public static Store getStore() {
     Faker faker = new Faker();
-    Map<Category, List<Product>> categoryMap = new HashMap<>();
+    List<Product> productsOfBooks = new ArrayList<>();
+    List<Product> productsOfBeers = new ArrayList<>();
+    List<Product> productsOfMedicines = new ArrayList<>();
+    List<Category> categories = new ArrayList<>();
+    Store store = new Store(categories);
 
+    public Store getRandomStore(int count) {
 
-    //Category Beer
-    categoryMap.put(new Category("Beer"), Arrays.asList(
-            new Product(faker.beer().name(), faker.number().numberBetween(1, 10), faker.number().numberBetween(100, 1500)),
-            new Product(faker.beer().name(), faker.number().numberBetween(1, 10), faker.number().numberBetween(100, 1500)),
-            new Product(faker.beer().name(),  faker.number().numberBetween(1, 10), faker.number().numberBetween(100, 1500))
-    ));
+        Category book = new Book("Book", productsOfBooks);
+        Category beer = new Beer("Beer",  productsOfBeers);
+        Category medicine = new Medicine("Medicine",  productsOfMedicines);
 
-    //Category Book
-    categoryMap.put(new Category("Book"), Arrays.asList(
-            new Product(faker.book().title(),  faker.number().numberBetween(1, 10), faker.number().numberBetween(100, 1500)),
-            new Product(faker.book().title(),  faker.number().numberBetween(1, 10), faker.number().numberBetween(100, 1500)),
-            new Product(faker.book().title(),  faker.number().numberBetween(1, 10), faker.number().numberBetween(100, 1500))
-    ));
+        for (int i = 0; i < count; i++) {
+            productsOfBooks.add(new Product(faker.book().title(), faker.number().numberBetween(1, 10), faker.number().numberBetween(1, 1000)));
+            productsOfBeers.add(new Product(faker.beer().name(), faker.number().numberBetween(1, 10), faker.number().numberBetween(1, 1000)));
+            productsOfMedicines.add(new Product(faker.medical().medicineName(), faker.number().numberBetween(1, 10), faker.number().numberBetween(1, 1000)));
+        }
 
-    //Category Medicine
-    categoryMap.put(new Category("Medicine"), Arrays.asList(
-            new Product(faker.medical().medicineName(), faker.number().numberBetween(1, 10), faker.number().numberBetween(100, 1500)),
-            new Product(faker.medical().medicineName(), faker.number().numberBetween(1, 10), faker.number().numberBetween(100, 1500)),
-            new Product(faker.medical().medicineName(), faker.number().numberBetween(1, 10), faker.number().numberBetween(100, 1500))
-    ));
+        categories.add(book);
+        categories.add(beer);
+        categories.add(medicine);
 
-/*          System.out.println("personMap: " + categoryMap.toString());
+        return store;
+    }
+
+    public void printInfoOfStore() {
+        System.out.println(store);
+        for (Category category : categories) {
+            System.out.println(category.getCategoryName() + " have");
             System.out.println();
-            System.out.println("personMap.keySet(): " + categoryMap.keySet().toString());
-            System.out.println();
-        for(Category category : categoryMap.keySet()){
-                System.out.println(category.toString() + " имеет");
+            for (Product product : category.getListOfProducts()) {
+                System.out.println("  " + product);
                 System.out.println();
-            for (Product product : categoryMap.get(category)){
-                    System.out.println("  " + product.toString());
-                    System.out.println();
             }
-        }*/
-    Store store = new Store(categoryMap);
-
-    return store;
-}
+        }
+    }
 }

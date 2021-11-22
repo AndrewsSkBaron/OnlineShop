@@ -1,18 +1,29 @@
 package com.onlineStore.coherent;
 
-public class Category {
-    String name;
+import java.util.List;
 
-    public Category(String name) {
-        this.name = name;
+public class Category {
+    private String categoryName;
+    private List<Product> listOfProducts;
+
+    public Category(String categoryName, List<Product> listOfProducts) {
+        this.categoryName = categoryName;
+        this.listOfProducts = listOfProducts;
     }
 
-    public String getName() {
-        return name;
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public List<Product> getListOfProducts() {
+        return listOfProducts;
     }
 
     @Override
     public String toString() {
-        return "Category '" + name + '\'';
+        return "Category { " +
+                "categoryName=' " + categoryName + '\'' +
+                ", listOfProducts = " + '\n' + "   "+ listOfProducts + '\n' +
+                '}';
     }
 }
