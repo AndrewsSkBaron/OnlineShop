@@ -1,0 +1,7 @@
+<root>
+    <sort>
+        <name>asc</name>
+        <price>asc</price>
+        <rate>desc</rate>
+    </sort>
+</root>
