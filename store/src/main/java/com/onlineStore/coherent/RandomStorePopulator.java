@@ -18,13 +18,13 @@ public class RandomStorePopulator {
     List<Category> categories = new ArrayList<>();
     Store store = new Store(categories);
 
-    public Store getRandomStore(int count) {
+    public Store getRandomStore() {
 
         Category book = new Book("Book", productsOfBooks);
         Category beer = new Beer("Beer",  productsOfBeers);
         Category medicine = new Medicine("Medicine",  productsOfMedicines);
 
-        for (int i = 0; i < count; i++) {
+        for (int i = 0; i < 5; i++) {
             productsOfBooks.add(new Product(faker.book().title(), faker.number().numberBetween(1, 10), faker.number().numberBetween(1, 1000)));
             productsOfBeers.add(new Product(faker.beer().name(), faker.number().numberBetween(1, 10), faker.number().numberBetween(1, 1000)));
             productsOfMedicines.add(new Product(faker.medical().medicineName(), faker.number().numberBetween(1, 10), faker.number().numberBetween(1, 1000)));

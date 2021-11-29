@@ -29,7 +29,7 @@ public class Product {
                 "name = '" + name + '\'' +
                 ", rate = " + rate +
                 ", price = " + price + " " +
-                '}';
+                '}' + '\n';
     }
 }
 
