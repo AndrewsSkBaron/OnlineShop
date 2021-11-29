@@ -1,4 +1,6 @@
-package com.onlineStore.coherent;
+package category;
+
+import product.Product;
 
 import java.util.List;
 

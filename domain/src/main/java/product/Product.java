@@ -1,4 +1,4 @@
-package com.onlineStore.coherent;
+package product;
 
 public class Product {
     private String name;

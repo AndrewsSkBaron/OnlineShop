@@ -1,6 +1,11 @@
 package com.onlineStore.coherent;
 
+import category.Beer;
+import category.Book;
+import category.Category;
+import category.Medicine;
 import com.github.javafaker.Faker;
+import product.Product;
 
 import java.util.ArrayList;
 import java.util.List;

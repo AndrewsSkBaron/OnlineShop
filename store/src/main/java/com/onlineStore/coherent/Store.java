@@ -1,6 +1,7 @@
 package com.onlineStore.coherent;
 
-import java.util.ArrayList;
+import category.Category;
+
 import java.util.List;
 
 public class Store {
