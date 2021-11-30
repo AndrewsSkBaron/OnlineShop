@@ -30,41 +30,9 @@ public class Interaction {
             }
             return productsAll;
         }
-//
-//        public void getSortRandomProducts(List list) {
-//            Comparator<Product> comp = Comparator.comparing(Product::getName).thenComparing(Product::getPrice);
-//            Collections.sort(list, comp);
-//            list.forEach(System.out::print);
-//
-//        }
-//
-//        public void getBestOfProducts(java.util.List<Product> list) {
-//            Collections.sort(list, new SortByRate());
-//            for (int i = 0; i < 5; i++) {
-//                System.out.print(list.get(i));
-//            }
-//        }
-
 
         private List<Product> getSortRandomProduct(List<Product> productsAll,Sort sort) {
             List<Product> sortProductsAll = new ArrayList<>(productsAll);
-
-
-            switch (sort.getName()) {
-                case "asc":
-                    Collections.sort(sortProductsAll, new SortByName());
-                    break;
-                default:
-                    return null;
-            }
-//            switch (sort.getPrice()) {
-//                case "asc":
-//                    Collections.sort(sortProductsAll, new SortByPrice());
-//                    break;
-//                default:
-//                    return null;
-//            }
-
 
             sortProductsAll.sort((o1, o2) -> {
                 int name = o1.getName().compareToIgnoreCase(o2.getName());
@@ -103,34 +71,8 @@ public class Interaction {
         for (int i = 0; i < 5; i++) {
             System.out.print(sortProductsAll.get(i));
         }
-//
-//        sortProductsAll.sort((o1, o2) -> {
-//            int rate = Integer.compare(o1.getRate(), o2.getRate());
-//            switch (sort.getRate()) {
-//                case "asc":
-//                    if (rate != 0) return rate;
-//                    break;
-//                case "desc":
-//                    if (rate != 0) return -rate;
-//                    break;
-//                default:
-//                    return 0;
-//            }
-//            return 0;
-//        });
-//        for (int i = 0; i < 5; i++) {
-//            System.out.print(sortProductsAll.get(i));
-//        }
+
     }
-
-
-//    public void getBestOfProducts() {
-//            SortByRate sort = new SortByRate();
-//            List<Product> sortProductsAll = getSortRandomProduct(collectAllProductsInAnArray(store));
-//            for (int i = 0; i < 5; i++) {
-//                System.out.print(sortProductsAll.get(i) + "\n");
-//            }
-//        }
 
         public void scannerUserInteraction() {
             Scanner scanner = new Scanner(System.in);
