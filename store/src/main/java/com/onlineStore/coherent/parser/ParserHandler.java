@@ -35,7 +35,6 @@ public class ParserHandler extends DefaultHandler {
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-        //System.out.println("Start element " + qName);
         currentTagName = qName;
 
         if (currentTagName.equals(TAG_SORT)) {
@@ -45,20 +44,15 @@ public class ParserHandler extends DefaultHandler {
 
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
-        //System.out.println("End element " + qName);
-
         if (qName.equals(TAG_SORT)) {
             isSorting = false;
         }
         currentTagName = null;
     }
 
-
     @Override
     public void characters(char[] ch, int start, int length) throws SAXException {
-        //System.out.println(currentTagName);
         if (currentTagName == null) return;
-
         if(isSorting) {
             switch (currentTagName) {
                 case TAG_NAME:

@@ -15,37 +15,26 @@ public class SortByPrice implements Comparator<Product> {
 
     @Override
     public int compare(Product price1, Product price2) {
-
         switch (sort.getPrice()) {
-                    case "asc":
-                        if(price1.getPrice() < price2.getPrice()) {
-                            return -1;
-                        }
-                        if(price1.getPrice() ==  price2.getPrice()) {
-                            return 1;
-                        }
-                        break;
-                    case "desc":
-                        if(price1.getPrice() > price2.getPrice()) {
-                            return 1;
-                        }
-                        if(price1.getPrice() ==  price2.getPrice()) {
-                            return -1;
-                        }
-                        break;
-                    default:
-                        return 0;
+            case "asc":
+                if(price1.getPrice() < price2.getPrice()) {
+                    return -1;
                 }
-
-//        if (price1.getPrice() < price2.getPrice()) {
-//            return 1;
-//        }
-//        if (price1.getPrice() == price2.getPrice()) {
-//            return 0;
-//        }
-
-
+                if(price1.getPrice() ==  price2.getPrice()) {
+                    return 1;
+                }
+                break;
+            case "desc":
+                if(price1.getPrice() > price2.getPrice()) {
+                    return 1;
+                }
+                if(price1.getPrice() ==  price2.getPrice()) {
+                    return -1;
+                }
+                break;
+            default:
+                return 0;
+        }
         return 0;
     }
-
 }

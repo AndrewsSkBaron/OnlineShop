@@ -1,7 +1,5 @@
 package com.onlineStore.coherent.sort;
 
-
-
 import product.Product;
 
 import java.util.Comparator;

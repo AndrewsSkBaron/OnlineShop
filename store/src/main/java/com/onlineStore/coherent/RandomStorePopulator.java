@@ -19,7 +19,6 @@ public class RandomStorePopulator {
     Store store = new Store(categories);
 
     public Store getRandomStore() {
-
         Category book = new Book("Book", productsOfBooks);
         Category beer = new Beer("Beer",  productsOfBeers);
         Category medicine = new Medicine("Medicine",  productsOfMedicines);
@@ -29,7 +28,6 @@ public class RandomStorePopulator {
             productsOfBeers.add(new Product(faker.beer().name(), faker.number().numberBetween(1, 10), faker.number().numberBetween(1, 1000)));
             productsOfMedicines.add(new Product(faker.medical().medicineName(), faker.number().numberBetween(1, 10), faker.number().numberBetween(1, 1000)));
         }
-
         categories.add(book);
         categories.add(beer);
         categories.add(medicine);
