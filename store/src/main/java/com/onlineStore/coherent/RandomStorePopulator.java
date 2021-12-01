@@ -28,6 +28,7 @@ public class RandomStorePopulator {
             productsOfBeers.add(new Product(faker.beer().name(), faker.number().numberBetween(1, 10), faker.number().numberBetween(1, 1000)));
             productsOfMedicines.add(new Product(faker.medical().medicineName(), faker.number().numberBetween(1, 10), faker.number().numberBetween(1, 1000)));
         }
+
         categories.add(book);
         categories.add(beer);
         categories.add(medicine);
@@ -42,7 +43,6 @@ public class RandomStorePopulator {
             System.out.println();
             for (Product product : category.getListOfProducts()) {
                 System.out.println("  " + product);
-                System.out.println();
             }
         }
     }

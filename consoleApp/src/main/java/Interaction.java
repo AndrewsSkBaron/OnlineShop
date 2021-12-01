@@ -1,21 +1,25 @@
 import category.Category;
-import com.onlineStore.coherent.RandomStorePopulator;
 import com.onlineStore.coherent.Store;
+import com.onlineStore.coherent.model.Root;
+import com.onlineStore.coherent.model.Sort;
+import com.onlineStore.coherent.parser.Parser;
 import com.onlineStore.coherent.sort.SortByName;
 import com.onlineStore.coherent.sort.SortByPrice;
 import com.onlineStore.coherent.sort.SortByRate;
-
 import product.Product;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Interaction {
+    private Store store;
 
-    private RandomStorePopulator random = new RandomStorePopulator();
-    private final Store store = random.getRandomStore();
+    private final Parser parser = new Parser();
+    private final Root root = parser.parse();
+    private final Sort sort = root.getSort();
+
+    public Interaction(Store store) {
+        this.store = store;
+    }
 
     public List<Product> collectAllProductsInAnArray() {
         List<Product> productsAll = new ArrayList<>();
@@ -27,35 +31,56 @@ public class Interaction {
 
     private List<Product> getSortRandomProduct(List<Product> productsAll) {
         List<Product> sortProductsAll = new ArrayList<>(productsAll);
-        Collections.sort(sortProductsAll, new SortByName()
-                .thenComparing(new SortByPrice())
-                .thenComparing(new SortByRate().reversed()));
+        Comparator sortByName;
+        Comparator sortByPrice;
+        Comparator sortByRate;
+
+        switch (sort.getName()) {
+            case "asc":
+                sortByName = new SortByName();
+                break;
+            case "desc":
+                sortByName = new SortByName().reversed();
+                break;
+            default:
+                return null;
+        }
+        switch (sort.getPrice()) {
+            case "asc":
+                sortByPrice = new SortByPrice();
+                break;
+            case "desc":
+                sortByPrice = new SortByPrice().reversed();
+                break;
+            default:
+                return null;
+        }
+        switch (sort.getRate()) {
+            case "asc":
+                sortByRate = new SortByRate();
+                break;
+            case "desc":
+                sortByRate = new SortByRate().reversed();
+                break;
+            default:
+                return null;
+        }
+
+        Collections.sort(sortProductsAll, sortByName.thenComparing(sortByPrice).thenComparing(sortByRate));
+
         return sortProductsAll;
     }
 
-    public void printOutAllSortedProducts() {
-        List<Product> sortProductsAll = getSortRandomProduct(collectAllProductsInAnArray());
-        System.out.println(sortProductsAll);
-    }
-
-    public void showSortByNamePrice() {
-        List<Product> sortProductsAll = getSortRandomProduct(collectAllProductsInAnArray());
-        Collections.sort(sortProductsAll, new SortByName().thenComparing(new SortByPrice()));
-        sortProductsAll.forEach(System.out::println);
-    }
-
     public void showBestOfProdByRate() {
-        List<Product> sortProductsAll = getSortRandomProduct(collectAllProductsInAnArray());
-        Collections.sort(sortProductsAll, new SortByRate());
+        List<Product> products = collectAllProductsInAnArray();
+        Collections.sort(products, new SortByRate().reversed());
         for (int i = 0; i < 5; i++) {
-            System.out.print(sortProductsAll.get(i));
+            System.out.print(products.get(i));
         }
-
     }
 
     public void scannerUserInteraction() {
         Scanner scanner = new Scanner(System.in);
-        printOutAllSortedProducts();
         System.out.println();
         printOutInfoOfHelp();
         quit:
@@ -63,7 +88,7 @@ public class Interaction {
             String option = scanner.nextLine();
             switch (option) {
                 case "sort":
-                    showSortByNamePrice();
+                    System.out.println(getSortRandomProduct(collectAllProductsInAnArray()));
                     System.out.println();
                     break;
                 case "top":
@@ -75,6 +100,8 @@ public class Interaction {
                     System.out.println("Bye Bye");
                     break quit;
                 default:
+                    printOutError();
+                    System.out.println();
                     printOutInfoOfHelp();
             }
         }
@@ -86,6 +113,14 @@ public class Interaction {
                         + "sort - print list of products ordered according to config;\n"
                         + "top - print top 5 products sorted via price desc;\n"
                         + "quit - exit app;"
+        );
+    }
+
+    private static void printOutError() {
+        System.out.println(
+                "Error. \n"
+                        + "The wrong action was entered. \n"
+                        + "Please repeat the entry."
         );
     }
 

@@ -8,6 +8,7 @@ public class SortByName implements Comparator<Product> {
 
     @Override
     public int compare(Product name1, Product name2) {
-            return name1.getName().compareTo(name2.getName());
+
+        return name1.getName().compareTo(name2.getName());
     }
 }
