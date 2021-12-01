@@ -1,6 +1,5 @@
 import category.Category;
 import com.onlineStore.coherent.Store;
-import com.onlineStore.coherent.model.Root;
 import com.onlineStore.coherent.model.Sort;
 import com.onlineStore.coherent.parser.Parser;
 import com.onlineStore.coherent.sort.SortByName;
@@ -14,11 +13,10 @@ public class Interaction {
     private Store store;
 
     private final Parser parser = new Parser();
-    private final Root root = parser.parse();
-    private final Sort sort = root.getSort();
+    private final Sort sort = parser.parse();
 
     public Interaction(Store store) {
-        this.store = store;
+            this.store = store;
     }
 
     public List<Product> collectAllProductsInAnArray() {
@@ -31,9 +29,7 @@ public class Interaction {
 
     private List<Product> getSortRandomProduct(List<Product> productsAll) {
         List<Product> sortProductsAll = new ArrayList<>(productsAll);
-        Comparator sortByName;
-        Comparator sortByPrice;
-        Comparator sortByRate;
+        Comparator sortByName, sortByPrice, sortByRate;
 
         switch (sort.getName()) {
             case "asc":

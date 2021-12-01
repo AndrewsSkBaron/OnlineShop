@@ -1,8 +1,5 @@
 package com.onlineStore.coherent.parser;
 
-import com.onlineStore.coherent.model.Root;
-
-
 import com.onlineStore.coherent.model.Sort;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -17,21 +14,12 @@ public class ParserHandler extends DefaultHandler {
     private String currentTagName;
     private boolean isSorting = false;
 
-    private Root root = new Root();
     private Sort sort = new Sort();
 
-    public Root getRoot() {
-        return root;
+    public Sort getSort() {
+        return sort;
     }
 
-
-    public void startDocument() throws SAXException {
-        root.setSort(sort);
-    }
-    @Override
-    public void endDocument() throws SAXException {
-        root.setSort(sort);
-    }
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {

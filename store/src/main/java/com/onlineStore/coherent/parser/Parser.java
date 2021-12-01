@@ -1,13 +1,13 @@
 package com.onlineStore.coherent.parser;
 
-import com.onlineStore.coherent.model.Root;
+import com.onlineStore.coherent.model.Sort;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.File;
 
 public class Parser {
-    public Root parse() {
+    public Sort parse() {
 
         SAXParserFactory factory = SAXParserFactory.newInstance();
         ParserHandler handler = new ParserHandler();
@@ -19,6 +19,6 @@ public class Parser {
             System.out.println("Parser was not created. " + e);
             e.printStackTrace();
         }
-        return handler.getRoot();
+        return handler.getSort();
     }
 }
