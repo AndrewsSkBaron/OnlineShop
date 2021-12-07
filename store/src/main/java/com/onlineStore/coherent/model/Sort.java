@@ -5,9 +5,6 @@ public class Sort {
     private String price;
     private String rate;
 
-    public Sort() {
-    }
-
     public String getName() {
         return name;
     }

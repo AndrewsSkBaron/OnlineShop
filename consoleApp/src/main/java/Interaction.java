@@ -64,7 +64,7 @@ public class Interaction {
 
         Collections.sort(sortProductsAll, sortByName.thenComparing(sortByPrice).thenComparing(sortByRate));
 
-        return sortProductsAll;
+        return new ArrayList<>(sortProductsAll);
     }
 
     public void showBestOfProdByRate() {
