@@ -16,7 +16,7 @@ public class RandomStorePopulator {
     List<Product> productsOfBeers = new ArrayList<>();
     List<Product> productsOfMedicines = new ArrayList<>();
     List<Category> categories = new ArrayList<>();
-    Store store = new Store(categories);
+    Store store = Store.getStore(categories);
 
     public Store getRandomStore() {
         Category book = new Book("Book", productsOfBooks);
