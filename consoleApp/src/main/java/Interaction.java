@@ -1,6 +1,9 @@
 import category.Category;
 import com.onlineStore.coherent.Store;
 import com.onlineStore.coherent.model.Sort;
+import com.onlineStore.coherent.multithreading.ThreadAddProductsInOrder;
+import com.onlineStore.coherent.multithreading.ThreadDeleteOrder;
+import com.onlineStore.coherent.order.Order;
 import com.onlineStore.coherent.parser.Parser;
 import com.onlineStore.coherent.sort.SortByName;
 import com.onlineStore.coherent.sort.SortByPrice;
@@ -15,6 +18,8 @@ public class Interaction {
     private final Parser parser = new Parser();
     private final Sort sort = parser.parse();
 
+    List<Product> productsToOrder = new ArrayList<>();
+
     public Interaction(Store store) {
             this.store = store;
     }
@@ -25,6 +30,24 @@ public class Interaction {
             productsAll.addAll(category.getListOfProducts());
         }
         return productsAll;
+    }
+
+    public long additionsStream (Long number) {
+        for (Product product : collectAllProductsInAnArray()){
+            if (number == product.getIdProduct()) {
+                ThreadAddProductsInOrder addProductsInOrder = new ThreadAddProductsInOrder(productsToOrder, product);
+                addProductsInOrder.start();
+                System.out.println(product);
+            }
+        }
+        return number;
+    }
+
+    public List StreamOfAdoption (List<Product> products) {
+        List<Order> order = new ArrayList(products);
+        ThreadDeleteOrder thread = new ThreadDeleteOrder(order);
+        thread.start();
+        return order;
     }
 
     private List<Product> getSortRandomProduct(List<Product> productsAll) {
@@ -75,14 +98,29 @@ public class Interaction {
         }
     }
 
-    public void scannerUserInteraction() {
+    public long scannerUserInteraction() {
         Scanner scanner = new Scanner(System.in);
+        long number = 0;
         System.out.println();
         printOutInfoOfHelp();
         quit:
         while (true) {
             String option = scanner.nextLine();
             switch (option) {
+                case "add":
+                    number = scanner.nextLong();
+                    additionsStream(number);
+                    System.out.println(
+                            "Added" + '\n'
+                            + "If you want to place an order enter: \" check out \" "
+                    );
+                    scanner.nextLine();
+                    break;
+                case "check out":
+                    StreamOfAdoption(productsToOrder);
+                    System.out.println();
+                    printOutInfoOfHelp();
+                    break;
                 case "sort":
                     System.out.println(getSortRandomProduct(collectAllProductsInAnArray()));
                     System.out.println();
@@ -90,6 +128,12 @@ public class Interaction {
                 case "top":
                     showBestOfProdByRate();
                     System.out.println();
+                    break;
+                case "order":
+                    System.out.println(StreamOfAdoption(productsToOrder));
+                    break;
+                case "help":
+                    printOutInfoOfHelp();
                     break;
                 case "quit":
                     System.out.println();
@@ -101,6 +145,7 @@ public class Interaction {
                     printOutInfoOfHelp();
             }
         }
+        return number;
     }
 
     private static void printOutInfoOfHelp() {
