@@ -2,13 +2,15 @@ import category.Category;
 import com.onlineStore.coherent.Store;
 import com.onlineStore.coherent.model.Sort;
 import com.onlineStore.coherent.multithreading.ThreadAddProductsInOrder;
+
 import com.onlineStore.coherent.multithreading.ThreadDeleteOrder;
-import com.onlineStore.coherent.order.Order;
+
 import com.onlineStore.coherent.parser.Parser;
 import com.onlineStore.coherent.sort.SortByName;
 import com.onlineStore.coherent.sort.SortByPrice;
 import com.onlineStore.coherent.sort.SortByRate;
 import product.Product;
+
 
 import java.util.*;
 
@@ -18,7 +20,7 @@ public class Interaction {
     private final Parser parser = new Parser();
     private final Sort sort = parser.parse();
 
-    List<Product> productsToOrder = new ArrayList<>();
+    private List<Product> productsToOrder = Collections.synchronizedList(new ArrayList<>());
 
     public Interaction(Store store) {
             this.store = store;
@@ -35,21 +37,20 @@ public class Interaction {
     public long additionsStream (Long number) {
         for (Product product : collectAllProductsInAnArray()){
             if (number == product.getIdProduct()) {
-                ThreadAddProductsInOrder addProductsInOrder = new ThreadAddProductsInOrder(productsToOrder, product);
-                addProductsInOrder.start();
+                ThreadAddProductsInOrder addProductsInOrder = ThreadAddProductsInOrder.getInstance(productsToOrder, product);
+                if (addProductsInOrder.getState().equals(Thread.State.RUNNABLE)) {
+                    addProductsInOrder.start();
+                }
+                if(productsToOrder.isEmpty()) {
+                    ThreadDeleteOrder threadDeleteOrder = new ThreadDeleteOrder(productsToOrder);
+                    threadDeleteOrder.start();
+                }
                 System.out.println(product);
             }
+
         }
         return number;
     }
-
-    public List StreamOfAdoption (List<Product> products) {
-        List<Order> order = new ArrayList(products);
-        ThreadDeleteOrder thread = new ThreadDeleteOrder(order);
-        thread.start();
-        return order;
-    }
-
     private List<Product> getSortRandomProduct(List<Product> productsAll) {
         List<Product> sortProductsAll = new ArrayList<>(productsAll);
         Comparator sortByName, sortByPrice, sortByRate;
@@ -110,16 +111,8 @@ public class Interaction {
                 case "add":
                     number = scanner.nextLong();
                     additionsStream(number);
-                    System.out.println(
-                            "Added" + '\n'
-                            + "If you want to place an order enter: \" check out \" "
-                    );
+                    System.out.println("Added");
                     scanner.nextLine();
-                    break;
-                case "check out":
-                    StreamOfAdoption(productsToOrder);
-                    System.out.println();
-                    printOutInfoOfHelp();
                     break;
                 case "sort":
                     System.out.println(getSortRandomProduct(collectAllProductsInAnArray()));
@@ -128,9 +121,6 @@ public class Interaction {
                 case "top":
                     showBestOfProdByRate();
                     System.out.println();
-                    break;
-                case "order":
-                    System.out.println(StreamOfAdoption(productsToOrder));
                     break;
                 case "help":
                     printOutInfoOfHelp();
@@ -153,6 +143,8 @@ public class Interaction {
                 "Please choose an action. Enter :\n"
                         + "sort - print list of products ordered according to config;\n"
                         + "top - print top 5 products sorted via price desc;\n"
+                        + "add -  adds the product to the order. Enter \"add\" and \"ProductID\" \n"
+                        + "help - print all possible actions \n"
                         + "quit - exit app;"
         );
     }

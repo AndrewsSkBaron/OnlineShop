@@ -5,13 +5,22 @@ import product.Product;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+
 public class ThreadAddProductsInOrder extends Thread {
+    private static ThreadAddProductsInOrder threadAddProducts;
     List<Product> productsToOrder;
     Product product;
 
-    public ThreadAddProductsInOrder(List<Product> productsToOrder, Product product) {
+    private ThreadAddProductsInOrder(List<Product> productsToOrder, Product product) {
         this.productsToOrder = productsToOrder;
         this.product = product;
+    }
+
+    public static synchronized ThreadAddProductsInOrder getInstance(List<Product> productsToOrder, Product product) {
+        if (threadAddProducts == null) {
+            threadAddProducts = new ThreadAddProductsInOrder(productsToOrder, product);
+        }
+        return  threadAddProducts;
     }
 
     public void run() {
