@@ -19,7 +19,7 @@ public class Interaction {
     private final Parser parser = new Parser();
     private final Sort sort = parser.parse();
 
-    private final List<Product> productsToOrder = new ArrayList<>();
+    private final List<Product> productsToOrder = Collections.synchronizedList(new ArrayList<>());
 
     public Interaction(Store store) {
             this.store = store;
