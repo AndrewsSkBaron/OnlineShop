@@ -33,7 +33,7 @@ public class Interaction {
         return productsAll;
     }
 
-    synchronized public long additionsStream (Long number) {
+     public long additionsStream (Long number) {
         for (Product product : collectAllProductsInAnArray()){
             if (number == product.getIdProduct()) {
                 ThreadAddProductsInOrder addProductsInOrder = new ThreadAddProductsInOrder(productsToOrder, product);
