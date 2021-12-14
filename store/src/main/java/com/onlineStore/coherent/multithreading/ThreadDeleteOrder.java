@@ -10,12 +10,14 @@ public class ThreadDeleteOrder extends Thread {
         this.order = order;
     }
     public void run() {
-        try {
-            sleep(30000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        while (true) {
+            try {
+                sleep(30000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            order.clear();
+            System.out.println(order);
         }
-        order.clear();
-        System.out.println(order);
     }
 }

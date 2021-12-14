@@ -10,6 +10,7 @@ public class Facade {
         for (Product list :  interaction.collectAllProductsInAnArray()) {
             System.out.println(list);
         }
+        interaction.streamOfAdoption();
         interaction.scannerUserInteraction();
     }
 }

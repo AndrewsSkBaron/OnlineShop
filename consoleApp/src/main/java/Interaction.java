@@ -105,7 +105,6 @@ public class Interaction {
         quit:
         while (true) {
             String option = scanner.nextLine();
-            streamOfAdoption();
             switch (option) {
                 case "add":
                     number = scanner.nextLong();
