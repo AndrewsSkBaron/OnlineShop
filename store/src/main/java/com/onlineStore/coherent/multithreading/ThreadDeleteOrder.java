@@ -11,7 +11,7 @@ public class ThreadDeleteOrder extends Thread {
     }
     public void run() {
         try {
-            sleep(120000);
+            sleep(30000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

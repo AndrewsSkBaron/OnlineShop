@@ -11,7 +11,6 @@ import com.onlineStore.coherent.sort.SortByPrice;
 import com.onlineStore.coherent.sort.SortByRate;
 import product.Product;
 
-
 import java.util.*;
 
 public class Interaction {
@@ -20,7 +19,7 @@ public class Interaction {
     private final Parser parser = new Parser();
     private final Sort sort = parser.parse();
 
-    private List<Product> productsToOrder = Collections.synchronizedList(new ArrayList<>());
+    private final List<Product> productsToOrder = new ArrayList<>();
 
     public Interaction(Store store) {
             this.store = store;
@@ -34,23 +33,22 @@ public class Interaction {
         return productsAll;
     }
 
-    public long additionsStream (Long number) {
+    synchronized public long additionsStream (Long number) {
         for (Product product : collectAllProductsInAnArray()){
             if (number == product.getIdProduct()) {
-                ThreadAddProductsInOrder addProductsInOrder = ThreadAddProductsInOrder.getInstance(productsToOrder, product);
-                if (addProductsInOrder.getState().equals(Thread.State.RUNNABLE)) {
+                ThreadAddProductsInOrder addProductsInOrder = new ThreadAddProductsInOrder(productsToOrder, product);
                     addProductsInOrder.start();
-                }
-                if(productsToOrder.isEmpty()) {
-                    ThreadDeleteOrder threadDeleteOrder = new ThreadDeleteOrder(productsToOrder);
-                    threadDeleteOrder.start();
-                }
                 System.out.println(product);
             }
-
         }
         return number;
     }
+
+    synchronized public void streamOfAdoption() {
+        ThreadDeleteOrder threadDeleteOrder = new ThreadDeleteOrder(productsToOrder);
+        threadDeleteOrder.start();
+    }
+
     private List<Product> getSortRandomProduct(List<Product> productsAll) {
         List<Product> sortProductsAll = new ArrayList<>(productsAll);
         Comparator sortByName, sortByPrice, sortByRate;
@@ -107,6 +105,7 @@ public class Interaction {
         quit:
         while (true) {
             String option = scanner.nextLine();
+            streamOfAdoption();
             switch (option) {
                 case "add":
                     number = scanner.nextLong();
