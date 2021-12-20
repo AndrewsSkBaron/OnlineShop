@@ -17,6 +17,10 @@ public class Product {
         return idProduct;
     }
 
+    public void setIdProduct(long idProduct) {
+        this.idProduct = idProduct;
+    }
+
     public String getName() {
         return name;
     }
@@ -32,8 +36,8 @@ public class Product {
     @Override
     public String toString() {
 
-        return '\n' + "Product" +
-                    "ID: " + idProduct +
+        return '\n' + "Product " +
+                    "ID:" + idProduct +
                     "; name: '" + name + '\'' +
                     "; rate: " + rate +
                     "; price: " + price + "; "  ;

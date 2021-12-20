@@ -9,16 +9,15 @@ public class ThreadDeleteOrder extends Thread {
     public ThreadDeleteOrder(List<Product> order) {
         this.order = order;
     }
+
     public void run() {
-        while (true) {
+        while (Thread.currentThread().isInterrupted()) {
             try {
-                sleep(15000);
+                sleep(10000);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                Thread.currentThread().isInterrupted();
             }
-            System.out.println(order);
             order.clear();
-            System.out.println(order);
         }
     }
 }

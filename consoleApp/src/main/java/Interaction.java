@@ -33,20 +33,32 @@ public class Interaction {
         return productsAll;
     }
 
-     public long additionsStream (Long number) {
-        for (Product product : collectAllProductsInAnArray()){
-            if (number == product.getIdProduct()) {
-                ThreadAddProductsInOrder addProductsInOrder = new ThreadAddProductsInOrder(productsToOrder, product);
-                    addProductsInOrder.start();
-                System.out.println(product);
-            }
+    public void changeTheIdToDisplayTheList() {
+        long i = 1;
+        for (Product list : collectAllProductsInAnArray()) {
+            list.setIdProduct(i++);
+            System.out.println(list);
         }
-        return number;
     }
 
-    synchronized public void streamOfAdoption() {
+     public void additionsStream (long number) {
+        for (Product product : collectAllProductsInAnArray()) {
+            if (product.getIdProduct() == number) {
+                ThreadAddProductsInOrder addProductsInOrder = new ThreadAddProductsInOrder(productsToOrder, product);
+                addProductsInOrder.start();
+                System.out.println("Product " + product.getName() + " Is already Added ");
+            }
+        }
+    }
+
+    synchronized public void streamOfAdoption(boolean trueOrFalse) {
         ThreadDeleteOrder threadDeleteOrder = new ThreadDeleteOrder(productsToOrder);
-        threadDeleteOrder.start();
+        if (trueOrFalse == true) {
+            threadDeleteOrder.start();
+        } else {
+            threadDeleteOrder.interrupt();
+        }
+
     }
 
     private List<Product> getSortRandomProduct(List<Product> productsAll) {
@@ -109,7 +121,6 @@ public class Interaction {
                 case "add":
                     number = scanner.nextLong();
                     additionsStream(number);
-                    System.out.println("Added");
                     scanner.nextLine();
                     break;
                 case "sort":
@@ -124,6 +135,7 @@ public class Interaction {
                     printOutInfoOfHelp();
                     break;
                 case "quit":
+                    streamOfAdoption(false);
                     System.out.println();
                     System.out.println("Bye Bye");
                     break quit;
