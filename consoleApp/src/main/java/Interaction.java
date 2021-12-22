@@ -15,14 +15,14 @@ import java.util.*;
 
 public class Interaction {
     private Store store;
-
     private final Parser parser = new Parser();
     private final Sort sort = parser.parse();
-
     private final List<Product> productsToOrder = Collections.synchronizedList(new ArrayList<>());
+    ThreadDeleteOrder threadDeleteOrder;
 
     public Interaction(Store store) {
-            this.store = store;
+        this.store = store;
+        this.threadDeleteOrder = new ThreadDeleteOrder(productsToOrder);
     }
 
     public List<Product> collectAllProductsInAnArray() {
@@ -41,24 +41,15 @@ public class Interaction {
         }
     }
 
-     public void additionsStream (long number) {
+    public void additionsStream (long number) {
         for (Product product : collectAllProductsInAnArray()) {
             if (product.getIdProduct() == number) {
-                ThreadAddProductsInOrder addProductsInOrder = new ThreadAddProductsInOrder(productsToOrder, product);
+            ThreadAddProductsInOrder addProductsInOrder = new ThreadAddProductsInOrder(productsToOrder, product);
                 addProductsInOrder.start();
                 System.out.println("Product " + product.getName() + " Is already Added ");
+                System.out.println(addProductsInOrder.getState());
             }
         }
-    }
-
-    synchronized public void streamOfAdoption(boolean trueOrFalse) {
-        ThreadDeleteOrder threadDeleteOrder = new ThreadDeleteOrder(productsToOrder);
-        if (trueOrFalse == true) {
-            threadDeleteOrder.start();
-        } else {
-            threadDeleteOrder.interrupt();
-        }
-
     }
 
     private List<Product> getSortRandomProduct(List<Product> productsAll) {
@@ -109,7 +100,8 @@ public class Interaction {
         }
     }
 
-    public long scannerUserInteraction() {
+    public void scannerUserInteraction() {
+        threadDeleteOrder.start();
         Scanner scanner = new Scanner(System.in);
         long number = 0;
         System.out.println();
@@ -135,7 +127,7 @@ public class Interaction {
                     printOutInfoOfHelp();
                     break;
                 case "quit":
-                    streamOfAdoption(false);
+                    threadDeleteOrder.interrupt();
                     System.out.println();
                     System.out.println("Bye Bye");
                     break quit;
@@ -145,7 +137,7 @@ public class Interaction {
                     printOutInfoOfHelp();
             }
         }
-        return number;
+
     }
 
     private static void printOutInfoOfHelp() {
@@ -168,4 +160,3 @@ public class Interaction {
     }
 
 }
-

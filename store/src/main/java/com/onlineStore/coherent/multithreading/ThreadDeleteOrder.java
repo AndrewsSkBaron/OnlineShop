@@ -11,12 +11,14 @@ public class ThreadDeleteOrder extends Thread {
     }
 
     public void run() {
-        while (Thread.currentThread().isInterrupted()) {
+        while (Thread.currentThread().isAlive()) {
             try {
-                sleep(10000);
+                sleep(60000);
             } catch (InterruptedException e) {
                 Thread.currentThread().isInterrupted();
+                break;
             }
+            System.out.println(order);
             order.clear();
         }
     }

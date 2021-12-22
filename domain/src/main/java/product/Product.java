@@ -7,7 +7,6 @@ public class Product {
     private int price;
 
     public Product(Builder builder) {
-        this.idProduct = builder.idProduct;
         this.name = builder.name;
         this.rate = builder.rate;
         this.price = builder.price;
@@ -44,13 +43,11 @@ public class Product {
     }
 
     public static class Builder {
-        long idProduct;
         String name;
         int rate;
         int price;
 
-        public Builder (long idProduct, String name, int rate, int price) {
-            this.idProduct = idProduct;
+        public Builder (String name, int rate, int price) {
             this.name = name;
             this.rate = rate;
             this.price = price;

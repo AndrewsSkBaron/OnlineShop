@@ -8,9 +8,6 @@ public class Facade {
         Interaction interaction = new Interaction(store);
 
         interaction.changeTheIdToDisplayTheList();
-
-        interaction.streamOfAdoption(true);
         interaction.scannerUserInteraction();
-
     }
 }

@@ -23,9 +23,9 @@ public class RandomStorePopulator {
         Category beer = new Beer("Beer",  productsOfBeers);
         Category medicine = new Medicine("Medicine",  productsOfMedicines);
         for (int i = 0; i < 3; i++) {
-            productsOfBooks.add(new Product.Builder((long)(11 + Math.random() * 100), faker.book().title(), faker.number().numberBetween(1, 10), faker.number().numberBetween(1, 1000)).build());
-            productsOfBeers.add(new Product.Builder((long)(11 + Math.random() * 100), faker.beer().name(), faker.number().numberBetween(1, 10), faker.number().numberBetween(1, 1000)).build());
-            productsOfMedicines.add(new Product.Builder((long)(11 + Math.random() * 100), faker.medical().medicineName(), faker.number().numberBetween(1, 10), faker.number().numberBetween(1, 1000)).build());
+            productsOfBooks.add(new Product.Builder(faker.book().title(), faker.number().numberBetween(1, 10), faker.number().numberBetween(1, 1000)).build());
+            productsOfBeers.add(new Product.Builder(faker.beer().name(), faker.number().numberBetween(1, 10), faker.number().numberBetween(1, 1000)).build());
+            productsOfMedicines.add(new Product.Builder(faker.medical().medicineName(), faker.number().numberBetween(1, 10), faker.number().numberBetween(1, 1000)).build());
         }
         categories.add(book);
         categories.add(beer);
