@@ -9,8 +9,11 @@ import com.onlineStore.coherent.parser.Parser;
 import com.onlineStore.coherent.sort.SortByName;
 import com.onlineStore.coherent.sort.SortByPrice;
 import com.onlineStore.coherent.sort.SortByRate;
+import database.DBWorker;
 import product.Product;
 
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.*;
 
 public class Interaction {
@@ -19,6 +22,7 @@ public class Interaction {
     private final Sort sort = parser.parse();
     private final List<Product> productsToOrder = Collections.synchronizedList(new ArrayList<>());
     ThreadDeleteOrder threadDeleteOrder;
+    DBWorker worker = new DBWorker();
 
     public Interaction(Store store) {
         this.store = store;
@@ -41,10 +45,13 @@ public class Interaction {
         }
     }
 
-    public void additionsStream (long number) {
+    public void additionsStream (long number) throws SQLException {
+        Statement statement = worker.getConnection().createStatement();
         for (Product product : collectAllProductsInAnArray()) {
             if (product.getIdProduct() == number) {
-            ThreadAddProductsInOrder addProductsInOrder = new ThreadAddProductsInOrder(productsToOrder, product);
+                String sql = "INSERT INTO orders (product_name, price) VALUES(" + "'" + product.getName() + "'" + ", " + "'" + product.getPrice() + "'" +");";
+                statement.execute(sql);
+                ThreadAddProductsInOrder addProductsInOrder = new ThreadAddProductsInOrder(productsToOrder, product);
                 addProductsInOrder.start();
                 System.out.println("Product " + product.getName() + " Is already Added ");
                 System.out.println(addProductsInOrder.getState());
@@ -100,9 +107,11 @@ public class Interaction {
         }
     }
 
-    public void scannerUserInteraction() {
+    public void scannerUserInteraction() throws SQLException {
         threadDeleteOrder.start();
         Scanner scanner = new Scanner(System.in);
+        Statement statement = worker.getConnection().createStatement();
+        statement.execute("CREATE TABLE orders(id INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT, PRODUCT_NAME VARCHAR(150), PRICE INT NOT NULL);");
         long number = 0;
         System.out.println();
         printOutInfoOfHelp();
@@ -128,6 +137,7 @@ public class Interaction {
                     break;
                 case "quit":
                     threadDeleteOrder.interrupt();
+                    statement.execute("DROP TABLE dbstore.orders;");
                     System.out.println();
                     System.out.println("Bye Bye");
                     break quit;
