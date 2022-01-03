@@ -9,7 +9,7 @@ import com.onlineStore.coherent.parser.Parser;
 import com.onlineStore.coherent.sort.SortByName;
 import com.onlineStore.coherent.sort.SortByPrice;
 import com.onlineStore.coherent.sort.SortByRate;
-import database.DBWorker;
+import database.DBConnections;
 import product.Product;
 
 import java.sql.SQLException;
@@ -22,7 +22,7 @@ public class Interaction {
     private final Sort sort = parser.parse();
     private final List<Product> productsToOrder = Collections.synchronizedList(new ArrayList<>());
     ThreadDeleteOrder threadDeleteOrder;
-    DBWorker worker = new DBWorker();
+    DBConnections worker = new DBConnections();
 
     public Interaction(Store store) {
         this.store = store;
@@ -137,7 +137,7 @@ public class Interaction {
                     break;
                 case "quit":
                     threadDeleteOrder.interrupt();
-                    statement.execute("DROP TABLE dbstore.orders;");
+                    statement.execute("DROP TABLE db_shop.orders;");
                     System.out.println();
                     System.out.println("Bye Bye");
                     break quit;
