@@ -2,21 +2,22 @@ package database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 
 public class DBConnections {
-    private final String URL = "jdbc:mysql://localhost:3306/db_shop";
-    private final String USERNAME = "root";
-    private final String PASSWORD = "root";
+    private static final String URL = "jdbc:mysql://localhost:3306/db_shop";
+    private static final String USERNAME = "root";
+    private static final String PASSWORD = "root";
+    private static Connection connection = null;
 
-    public Connection getConnection() {
-        Connection connection = null;
+    private DBConnections() {}
+
+    public static Connection getConnection() {
         try {
-            connection = DriverManager.getConnection(URL,USERNAME,PASSWORD);
-            if (!connection.isClosed()) {
-                System.out.println("Connected");
+            if (connection == null) {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                connection = DriverManager.getConnection(URL,USERNAME,PASSWORD);
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return connection;

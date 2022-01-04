@@ -1,16 +1,18 @@
 import com.onlineStore.coherent.RandomStorePopulator;
 import com.onlineStore.coherent.Store;
-import database.DBFill;
+import database.DataBase;
 
 import java.sql.SQLException;
 
 public class Facade {
     public void run() throws SQLException {
-        DBFill dbFill = new DBFill();
-        dbFill.insertData();
+        DataBase dataBase = new DataBase();
+        dataBase.createDataBaseTables();
+        dataBase.insertDataOfProducts();
+        dataBase.insertDataOfCategories();
 
-        RandomStorePopulator randomStorePopular = new RandomStorePopulator();
-        Store store =  randomStorePopular.getRandomStore();
+        RandomStorePopulator randomStorePopulator = new RandomStorePopulator();
+        Store store = randomStorePopulator.getRandomStore();
         Interaction interaction = new Interaction(store);
         interaction.changeTheIdToDisplayTheList();
         interaction.scannerUserInteraction();

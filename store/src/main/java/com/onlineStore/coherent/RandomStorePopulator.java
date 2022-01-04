@@ -5,16 +5,14 @@ import category.Book;
 import category.Category;
 import category.Medicine;
 
-import database.DBConnections;
+import database.DataBase;
 import product.Product;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 public class RandomStorePopulator {
+    DataBase dataBase = new DataBase();
     List<Product> productsOfBooks = new ArrayList<>();
     List<Product> productsOfBeers = new ArrayList<>();
     List<Product> productsOfMedicines = new ArrayList<>();
@@ -22,55 +20,29 @@ public class RandomStorePopulator {
     Store store = Store.getStore(categories);
 
     public Store getRandomStore() {
-        DBConnections worker = new DBConnections();
-        /*Book*/
-        try (Statement statement = worker.getConnection().createStatement()) {
-            String query = "SELECT * FROM db_shop.products WHERE category_name = 'Book'";
-            ResultSet rs = statement.executeQuery(query);
+        Category book = new Book("Book", productsOfBooks);
+        Category beer = new Beer("Beer",  productsOfBeers);
+        Category medicine = new Medicine("Medicine",  productsOfMedicines);
 
-            String category = null;
-            while (rs.next()) {
-                category = rs.getString("category_name");
-                productsOfBooks.add(new Product.Builder(rs.getString("product_name"), rs.getInt("rate"), rs.getInt("price")).build());
-            }
-            Category book = new Book(category, productsOfBooks);
-            categories.add(book);
-            rs.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        dataBase.getDataOutProducts("Book", productsOfBooks);
+        dataBase.getDataOutProducts("Beer", productsOfBeers);
+        dataBase.getDataOutProducts("Medicine", productsOfMedicines);
 
-        /*Beer*/
-        try (Statement statement = worker.getConnection().createStatement()) {
-            String query = "SELECT * FROM db_shop.products WHERE category_name = 'Beer'";
-            ResultSet rs = statement.executeQuery(query);
-            String category = null;
-            while (rs.next()) {
-                category = rs.getString("category_name");
-                productsOfBeers.add(new Product.Builder(rs.getString("product_name"), rs.getInt("rate"), rs.getInt("price")).build());
-            }
-            Category beer = new Beer(category, productsOfBeers);
-            categories.add(beer);
-            rs.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        categories.add(book);
+        categories.add(beer);
+        categories.add(medicine);
 
-        /*Medicine*/
-        try (Statement statement = worker.getConnection().createStatement()) {
-            String query = "SELECT * FROM db_shop.products WHERE category_name = 'Medicine'";
-            ResultSet rs = statement.executeQuery(query);
-            String category = null;
-            while (rs.next()) {
-                category = rs.getString("category_name");
-                productsOfMedicines.add(new Product.Builder(rs.getString("product_name"), rs.getInt("rate"), rs.getInt("price")).build());
-            }
-            Category medicine = new Medicine(category, productsOfMedicines);
-            categories.add(medicine);
-            rs.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         return store;
+    }
+
+    public void printInfoOfStore() {
+        System.out.println(store);
+        for (Category category : categories) {
+            System.out.println(category.getCategoryName() + " have");
+            System.out.println();
+            for (Product product : category.getListOfProducts()) {
+                System.out.println("  " + product);
+            }
+        }
     }
 }

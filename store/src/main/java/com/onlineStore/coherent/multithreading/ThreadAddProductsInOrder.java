@@ -1,5 +1,6 @@
 package com.onlineStore.coherent.multithreading;
 
+import database.DataBase;
 import product.Product;
 
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 public class ThreadAddProductsInOrder extends Thread {
     List<Product> productsToOrder;
     Product product;
+    DataBase dataBase = new DataBase();
 
     public ThreadAddProductsInOrder(List<Product> productsToOrder, Product product) {
         this.productsToOrder = productsToOrder;
@@ -21,6 +23,7 @@ public class ThreadAddProductsInOrder extends Thread {
             e.printStackTrace();
         }
         productsToOrder.add(product);
+        dataBase.addProductsInOrderTable(product);
         System.out.println(productsToOrder);
     }
 
