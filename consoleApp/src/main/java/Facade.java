@@ -8,10 +8,10 @@ public class Facade {
     public void run() throws SQLException {
         DataBase dataBase = new DataBase();
         dataBase.createDataBaseTables();
-        dataBase.insertDataOfProducts();
         dataBase.insertDataOfCategories();
 
         RandomStorePopulator randomStorePopulator = new RandomStorePopulator();
+        randomStorePopulator.insertDataOfProducts();
         Store store = randomStorePopulator.getRandomStore();
         Interaction interaction = new Interaction(store);
         interaction.changeTheIdToDisplayTheList();

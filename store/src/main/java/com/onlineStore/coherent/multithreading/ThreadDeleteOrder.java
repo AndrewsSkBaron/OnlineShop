@@ -1,11 +1,14 @@
 package com.onlineStore.coherent.multithreading;
 
+import database.DataBase;
 import product.Product;
 
 import java.util.List;
 
 public class ThreadDeleteOrder extends Thread {
     private List<Product> order;
+    DataBase dataBase = new DataBase();
+
     public ThreadDeleteOrder(List<Product> order) {
         this.order = order;
     }
@@ -19,6 +22,7 @@ public class ThreadDeleteOrder extends Thread {
                 break;
             }
             System.out.println(order);
+            dataBase.deleteTableOrders();
             order.clear();
         }
     }

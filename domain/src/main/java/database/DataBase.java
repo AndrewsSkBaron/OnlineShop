@@ -1,38 +1,36 @@
 package database;
 
-import com.github.javafaker.Faker;
 import product.Product;
 
 import java.sql.*;
 import java.util.List;
 
 public class DataBase {
-    Faker faker = new Faker();
     Connection worker = DBConnections.getConnection();
 
     public void createDataBaseTables() {
         try (Statement statement = worker.createStatement()){
             statement.execute("CREATE TABLE products(PRODUCT_NAME VARCHAR(150), RATE INT NOT NULL, PRICE INT NOT NULL, CATEGORY_NAME VARCHAR(56));");
             statement.execute("CREATE TABLE categories(CATEGORY_ID INT NOT NULL PRIMARY KEY AUTO_INCREMENT,CATEGORY_NAME VARCHAR(56) REFERENCES products(CATEGORY_NAME));");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void createTableOrder() {
-        try (Statement statement = worker.createStatement()){
             statement.execute("CREATE TABLE orders(id INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT, PRODUCT_NAME VARCHAR(150), PRICE INT NOT NULL);");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-
-    public void deleteDataBaseTables()  {
+    public void dropDataBaseTables()  {
         try (Statement statement = worker.createStatement()){
             statement.execute("DROP TABLE products;");
             statement.execute("DROP TABLE categories;");
             statement.execute("DROP TABLE orders;");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteTableOrders()  {
+        try (Statement statement = worker.createStatement()){
+            statement.execute("DELETE FROM orders;");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -47,13 +45,7 @@ public class DataBase {
         }
     }
 
-    public void insertDataOfProducts() {
-        for (int i = 0; i < 3; i++) {
-            dataInsertionTemplate(faker.book().title(), faker.number().numberBetween(1, 10), faker.number().numberBetween(1, 1000),"Book");
-            dataInsertionTemplate(faker.beer().name(), faker.number().numberBetween(1, 10), faker.number().numberBetween(1, 1000),"Beer");
-            dataInsertionTemplate(faker.medical().medicineName(), faker.number().numberBetween(1, 10), faker.number().numberBetween(1, 1000),"Medicine");
-        }
-    }
+
 
     public void insertDataOfCategories() {
         try (Statement statement= worker.createStatement()) {

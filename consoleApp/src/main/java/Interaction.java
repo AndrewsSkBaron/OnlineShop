@@ -9,12 +9,10 @@ import com.onlineStore.coherent.parser.Parser;
 import com.onlineStore.coherent.sort.SortByName;
 import com.onlineStore.coherent.sort.SortByPrice;
 import com.onlineStore.coherent.sort.SortByRate;
-import database.DBConnections;
 import database.DataBase;
 import product.Product;
 
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.*;
 
 public class Interaction {
@@ -107,7 +105,6 @@ public class Interaction {
     public void scannerUserInteraction() throws SQLException {
         threadDeleteOrder.start();
         DataBase dataBase = new DataBase();
-        dataBase.createTableOrder();
         Scanner scanner = new Scanner(System.in);
 
         long number = 0;
@@ -135,7 +132,7 @@ public class Interaction {
                     break;
                 case "quit":
                     threadDeleteOrder.interrupt();
-                    dataBase.deleteDataBaseTables();
+                    dataBase.dropDataBaseTables();
                     System.out.println();
                     System.out.println("Bye Bye");
                     break quit;
