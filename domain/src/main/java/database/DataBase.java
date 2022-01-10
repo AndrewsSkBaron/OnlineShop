@@ -37,8 +37,8 @@ public class DataBase {
     }
 
     public void dataInsertionTemplate(String name, int rate, int price, String category_name) {
-        String SQL_Products = String.format("INSERT INTO products (product_name, rate, price, category_name) VALUES('%s', %d, %d, '%s');", name, rate, price, category_name);
-        try (PreparedStatement preparedStatement = worker.prepareStatement(SQL_Products)) {
+        String sqlProducts = String.format("INSERT INTO products (product_name, rate, price, category_name) VALUES('%s', %d, %d, '%s');", name, rate, price, category_name);
+        try (PreparedStatement preparedStatement = worker.prepareStatement(sqlProducts)) {
             preparedStatement.execute();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
