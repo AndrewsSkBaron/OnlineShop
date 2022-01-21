@@ -64,45 +64,5 @@ public class Order {
         restTemplate.delete(ORDER_URL);
     }
 
-    //    @OneToMany
-//    @Column(name = "purchased_products")
-//    private List<Product> purchasedProducts = Collections.synchronizedList(new ArrayList<>());
-
-//    @Transient
-//    private List<Product> orderList = new ArrayList<>();
-//
-//    public Order(List<Product> orderList) {
-//        this.orderList = orderList;
-//    }
-//
-//    public Order() {
-//    }
-//
-//    public synchronized void addGoods(List<Product> orderList) {
-////        Order order = new Order();
-////        orderList.addAll(orderList);
-////        order.setPurchasedProducts(orderList);
-////        restTemplate.postForObject(ORDER_URL, order, Order.class);
-//    }
-//
-//    public List<Product> getPurchasedProducts() {
-//        return purchasedProducts;
-//    }
-//
-//    public void setPurchasedProducts(List<Product> purchasedProducts) {
-//        this.purchasedProducts = purchasedProducts;
-//    }
-//
-//    public Long getId() {
-//        return id;
-//    }
-//
-//    @Override
-//    public String toString() {
-//        return "Order{" +
-//                "id=" + id +
-//                ", orderList=" + orderList +
-//                '}';
-//    }
 }
 
