@@ -1,4 +1,4 @@
-package database;
+package com.onlineShop.coherent.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

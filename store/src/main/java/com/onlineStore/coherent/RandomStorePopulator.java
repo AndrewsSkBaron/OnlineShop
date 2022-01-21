@@ -1,59 +1,58 @@
 package com.onlineStore.coherent;
 
-import category.Beer;
-import category.Book;
-import category.Category;
-import category.Medicine;
-
-import com.github.javafaker.Faker;
-import database.DataBase;
-import product.Product;
+import com.onlineShop.coherent.category.Category;
+import com.onlineShop.coherent.product.Product;
+import org.reflections.Reflections;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
+import static org.reflections.scanners.Scanners.SubTypes;
+
+@Component
 public class RandomStorePopulator {
-    DataBase dataBase = new DataBase();
-    Faker faker = new Faker();
-    List<Product> productsOfBooks = new ArrayList<>();
-    List<Product> productsOfBeers = new ArrayList<>();
-    List<Product> productsOfMedicines = new ArrayList<>();
+    private final String CATEGORY_URL = "http://localhost:8080/category";
+    private final String PRODUCT_URL = "http://localhost:8080/product";
+    private final String CATEGORY_PUT_URL = "http://localhost:8080/category/{id}";
+    private final Random popular = new Random();
+    private final RestTemplate restTemplate = new RestTemplateBuilder().basicAuthentication("user", "user").build();
+
+    List<Product> products = new ArrayList<>();
     List<Category> categories = new ArrayList<>();
     Store store = Store.getStore(categories);
 
     public void insertDataOfProducts() {
-        for (int i = 0; i < 3; i++) {
-            dataBase.dataInsertionTemplate(faker.book().title(), faker.number().numberBetween(1, 10), faker.number().numberBetween(1, 1000),"Book");
-            dataBase.dataInsertionTemplate(faker.beer().name(), faker.number().numberBetween(1, 10), faker.number().numberBetween(1, 1000),"Beer");
-            dataBase.dataInsertionTemplate(faker.medical().medicineName(), faker.number().numberBetween(1, 10), faker.number().numberBetween(1, 1000),"Medicine");
+        Reflections reflections = new Reflections("com.onlineShop.coherent.category.categories");
+        Set<Class<?>> subTypes = reflections.get(SubTypes.of(Category.class).asClass());
+        for (Class c : subTypes) {
+            String s = c.getName().replace("com.onlineShop.coherent.category.categories.", "");
+            restTemplate.postForObject(CATEGORY_URL, new Category(s), Category.class);
+        }
+        ResponseEntity<Category[]> responseCategory = restTemplate.getForEntity(CATEGORY_URL, Category[].class);
+        for (Category category : Objects.requireNonNull(responseCategory.getBody())) {
+            List<Product> productList = new ArrayList<>();
+            for (int i = 0; i < 3; i++) {
+                Product product = new Product.Builder(popular.getProductName(category.getName()), popular.getRate(), popular.getPrice()).build();
+                restTemplate.postForObject(PRODUCT_URL, product, Product.class);
+                productList.add(product);
+            }
+            category.addProduct(productList);
+            restTemplate.put(CATEGORY_PUT_URL, category, Category.class);
         }
     }
 
     public Store getRandomStore() {
-        Category book = new Book("Book", productsOfBooks);
-        Category beer = new Beer("Beer",  productsOfBeers);
-        Category medicine = new Medicine("Medicine",  productsOfMedicines);
-
-        dataBase.getDataOutProducts("Book", productsOfBooks);
-        dataBase.getDataOutProducts("Beer", productsOfBeers);
-        dataBase.getDataOutProducts("Medicine", productsOfMedicines);
-
-        categories.add(book);
-        categories.add(beer);
-        categories.add(medicine);
-
-        return store;
-    }
-
-
-    public void printInfoOfStore() {
-        System.out.println(store);
-        for (Category category : categories) {
-            System.out.println(category.getCategoryName() + " have");
-            System.out.println();
-            for (Product product : category.getListOfProducts()) {
-                System.out.println("  " + product);
-            }
+        ResponseEntity<Category[]> responseCategory = restTemplate.getForEntity(CATEGORY_URL, Category[].class);
+        for (Category category : Objects.requireNonNull(responseCategory.getBody())) {
+            categories.add(category);
+            products.addAll(category.getListOfProducts());
         }
+        return store;
     }
 }
