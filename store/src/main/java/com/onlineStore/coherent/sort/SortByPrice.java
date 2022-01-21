@@ -1,6 +1,6 @@
 package com.onlineStore.coherent.sort;
 
-import product.Product;
+import com.onlineShop.coherent.product.Product;
 
 import java.util.Comparator;
 
