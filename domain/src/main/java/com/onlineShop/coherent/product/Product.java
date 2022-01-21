@@ -14,8 +14,8 @@ public class Product {
     private int rate;
     private int price;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @Transient
+    @ManyToOne
+    @JoinColumn(name = "categories_id")
     private Category categories;
 
     public Product(Builder builder) {
@@ -37,10 +37,6 @@ public class Product {
         return name;
     }
 
-    public void setCategories(Category categories) {
-        this.categories = categories;
-    }
-
     public int getPrice() {
         return price;
     }
@@ -52,6 +48,15 @@ public class Product {
     public int getRate() {
         return rate;
     }
+
+    public void setCategories(Category categories) {
+        this.categories = categories;
+    }
+
+    public Category getCategories() {
+        return categories;
+    }
+
 
     @Override
     public String toString() {

@@ -16,9 +16,9 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "category_product", joinColumns = {@JoinColumn(name = "categories_id")},
-            inverseJoinColumns = {@JoinColumn(name = "product_id")})
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "categories", targetEntity = Product.class)
+    /*@JoinTable(name = "category_product", joinColumns = {@JoinColumn(name = "categories_id")},
+            inverseJoinColumns = {@JoinColumn(name = "product_id")})*/
     private List<Product> listOfProducts;
 
     public Category(String name) {
@@ -32,6 +32,10 @@ public class Category {
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Long getId() {

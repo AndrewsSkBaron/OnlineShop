@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/product")
 public class ProductController {
 
     @Autowired
@@ -18,19 +19,20 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping("/product")
+    @GetMapping
     public ResponseEntity getProducts() {
         return ResponseEntity.ok(productService.getProduct());
     }
 
-    @GetMapping("/product/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity getCategoryById(@PathVariable Long id) {
         return ResponseEntity.ok(productService.getProduct(id));
     }
 
-    @PostMapping("/product")
+    @PostMapping
     public ResponseEntity<Product> addProduct(@RequestBody Product product) {
         Product p = productService.save(product);
         return new ResponseEntity<>(p, HttpStatus.CREATED);
     }
+
 }

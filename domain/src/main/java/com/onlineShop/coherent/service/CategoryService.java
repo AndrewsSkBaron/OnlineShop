@@ -51,19 +51,8 @@ public class CategoryService {
         Category updateCategory = categoryRepo.findByName(category.getName());
         List<Product> productList = new ArrayList<>();
         for (Product product : category.getListOfProducts()) {
-            Product productFromDb = null;
-            try {
-                productFromDb = productRepo.findByName(product.getName());
-            } catch (Exception e) {
-                List<Product> tmp = productRepo.searchDuplicateByName(product.getName());
-                for (Product p : tmp) {
-                    if (product.equals(p))
-                        productList.add(p);
-                }
-            }
-            if (productFromDb != null) {
-                productList.add(productFromDb);
-            }
+            Product prod = productRepo.findByName(product.getName());
+            productList.add(prod);
         }
         updateCategory.addProduct(productList);
         categoryRepo.save(updateCategory);
