@@ -5,10 +5,9 @@ public class Facade {
     public void run() {
         RandomStorePopulator random = new RandomStorePopulator();
         random.insertDataOfProducts();
-        random.getRandomStore();
- //       Store store = random.getRandomStore();
-//        Interaction interaction = new Interaction(store);
-//        interaction.collectAllProductsInAnArray();
-//        interaction.scannerUserInteraction();
+        Store store = random.getRandomStore();
+        Interaction interaction = new Interaction(store);
+        interaction.collectAllProductsInAnArray();
+        interaction.scannerUserInteraction();
     }
 }

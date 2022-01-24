@@ -47,17 +47,17 @@ public class CategoryService {
         return categoryRepo.save(category);
     }
 
-    public Category addProductToCategory(Category category) {
-        Category updateCategory = categoryRepo.findByName(category.getName());
-        List<Product> productList = new ArrayList<>();
-        for (Product product : category.getListOfProducts()) {
-            Product prod = productRepo.findByName(product.getName());
-            productList.add(prod);
-        }
-        updateCategory.addProduct(productList);
-        categoryRepo.save(updateCategory);
-        return updateCategory;
-    }
+//    public Category addProductToCategory(Category category) {
+//        Category updateCategory = categoryRepo.findByName(category.getName());
+//        List<Product> productList = new ArrayList<>();
+//        for (Product product : category.getListOfProducts()) {
+//            Product prod = productRepo.findByName(product.getName());
+//            productList.add(prod);
+//        }
+//        updateCategory.addProduct(productList);
+//        categoryRepo.save(updateCategory);
+//        return updateCategory;
+//    }
 
     public List<Category> getCategory() {
         return (List<Category>) categoryRepo.findAll();

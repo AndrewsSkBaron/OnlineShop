@@ -5,7 +5,6 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.web.client.RestTemplate;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "product_order")

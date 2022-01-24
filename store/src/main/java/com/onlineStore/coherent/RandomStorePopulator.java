@@ -28,10 +28,9 @@ public class RandomStorePopulator {
         ResponseEntity<Category[]> responseCategory = restTemplate.getForEntity(URL + "/category", Category[].class);
         for (Category category : Objects.requireNonNull(responseCategory.getBody())) {
             for (int i = 0; i < 3; i++) {
-                Product product = new Product.Builder(popular.getProductName(category.getName()), popular.getRate(), popular.getPrice()).build();
+                Product product = new Product.Builder(popular.getProductName(category.getName()), popular.getRate(), popular.getPrice(), category.getId()).build();
                 restTemplate.postForObject(URL + "/product", product, Product.class);
             }
-            restTemplate.put(URL + "/category/{id}", category, Category.class);
         }
     }
 

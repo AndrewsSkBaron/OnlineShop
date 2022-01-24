@@ -32,10 +32,4 @@ public class CategoryController {
         Category cat = categoryService.save(category);
         return new ResponseEntity<>(cat, HttpStatus.CREATED);
     }
-
-    @PutMapping("/category/{id}")
-    public ResponseEntity<Category> update(@RequestBody Category category) {
-        Category cat = categoryService.addProductToCategory(category);
-        return new ResponseEntity<>(cat, HttpStatus.CREATED);
-    }
 }

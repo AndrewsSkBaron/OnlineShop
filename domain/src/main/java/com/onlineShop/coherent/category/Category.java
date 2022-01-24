@@ -17,8 +17,6 @@ public class Category {
     private Long id;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "categories", targetEntity = Product.class)
-    /*@JoinTable(name = "category_product", joinColumns = {@JoinColumn(name = "categories_id")},
-            inverseJoinColumns = {@JoinColumn(name = "product_id")})*/
     private List<Product> listOfProducts;
 
     public Category(String name) {
