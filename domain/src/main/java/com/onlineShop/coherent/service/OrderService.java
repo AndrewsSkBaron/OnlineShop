@@ -1,7 +1,7 @@
 package com.onlineShop.coherent.service;
 
-import com.onlineShop.coherent.repository.OrderRepository;
 import com.onlineShop.coherent.order.Order;
+import com.onlineShop.coherent.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

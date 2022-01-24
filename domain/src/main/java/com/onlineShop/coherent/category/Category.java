@@ -40,25 +40,12 @@ public class Category {
         return id;
     }
 
-    public void addProduct(List<Product> products) {
-        if (listOfProducts == null) {
-            listOfProducts = new ArrayList<>();
-        }
-        listOfProducts.addAll(products);
-    }
-
     public List<Product> getListOfProducts() {
         return listOfProducts;
     }
 
     public void setListOfProducts(List<Product> listOfProducts) {
         this.listOfProducts = listOfProducts;
-    }
-
-    public void printProducts() {
-        for (Product product : listOfProducts) {
-            System.out.println(product);
-        }
     }
 
     @Override

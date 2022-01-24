@@ -1,13 +1,13 @@
 package com.onlineStore.coherent.multithreading;
 
-import com.onlineShop.coherent.order.Order;
+import com.onlineShop.coherent.client.HttpClient;
 import com.onlineShop.coherent.product.Product;
 
 import java.util.List;
 
 public class ThreadDeleteOrder extends Thread {
     private List<Product> order;
-    Order orderHttp = new Order();
+    HttpClient httpClient = new HttpClient();
     public ThreadDeleteOrder(List<Product> order) {
         this.order = order;
     }
@@ -21,7 +21,7 @@ public class ThreadDeleteOrder extends Thread {
                 break;
             }
             order.clear();
-            orderHttp.deleteProducts();
         }
+        httpClient.deleteProducts();
     }
 }

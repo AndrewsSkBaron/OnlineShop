@@ -15,13 +15,11 @@ import java.util.List;
 public class CategoryService {
     @Autowired
     private final CategoryRepo categoryRepo;
-    @Autowired
-    private final ProductRepo productRepo;
+
     private boolean ifCategoryExist = true;
 
-    public CategoryService(CategoryRepo categoryRepo, ProductRepo productRepo) {
+    public CategoryService(CategoryRepo categoryRepo) {
         this.categoryRepo = categoryRepo;
-        this.productRepo = productRepo;
     }
 
     public Category save(Category category) {
@@ -46,18 +44,6 @@ public class CategoryService {
         }
         return categoryRepo.save(category);
     }
-
-//    public Category addProductToCategory(Category category) {
-//        Category updateCategory = categoryRepo.findByName(category.getName());
-//        List<Product> productList = new ArrayList<>();
-//        for (Product product : category.getListOfProducts()) {
-//            Product prod = productRepo.findByName(product.getName());
-//            productList.add(prod);
-//        }
-//        updateCategory.addProduct(productList);
-//        categoryRepo.save(updateCategory);
-//        return updateCategory;
-//    }
 
     public List<Category> getCategory() {
         return (List<Category>) categoryRepo.findAll();

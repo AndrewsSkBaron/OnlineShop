@@ -1,6 +1,5 @@
 package com.onlineShop.coherent.product;
 
-
 import javax.persistence.*;
 
 @Entity
@@ -13,8 +12,8 @@ public class Product {
     private int rate;
     private int price;
 
-   //@ManyToOne
-    //@JoinColumn(name = "categories_id")
+//    @ManyToOne
+//    @JoinColumn(name = "categories_id")
     private Long categories;
 
     public Product(Builder builder) {

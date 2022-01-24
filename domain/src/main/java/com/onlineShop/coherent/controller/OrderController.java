@@ -1,5 +1,6 @@
 package com.onlineShop.coherent.controller;
 
+import com.onlineShop.coherent.product.Product;
 import com.onlineShop.coherent.service.OrderService;
 import com.onlineShop.coherent.order.Order;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +32,6 @@ public class OrderController {
     public HttpStatus delete() {
         orderService.delete();
         return HttpStatus.OK;
-
     }
-
 
 }
