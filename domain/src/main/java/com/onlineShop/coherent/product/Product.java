@@ -1,5 +1,7 @@
 package com.onlineShop.coherent.product;
 
+import com.onlineShop.coherent.category.Category;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,15 +14,16 @@ public class Product {
     private int rate;
     private int price;
 
-//    @ManyToOne
-//    @JoinColumn(name = "categories_id")
-    private Long categories;
+    @ManyToOne
+    @JoinColumn(name = "categories_id", insertable = true)
+    private Category categories;
 
     public Product(Builder builder) {
         this.name = builder.name;
         this.rate = builder.rate;
         this.price = builder.price;
         this.categories = builder.categories;
+
     }
 
     public Product() {
@@ -48,14 +51,6 @@ public class Product {
         return rate;
     }
 
-    public Long getCategories() {
-        return categories;
-    }
-
-    public void setCategories(Long categories) {
-        this.categories = categories;
-    }
-
     @Override
     public String toString() {
         return "Product{" +
@@ -70,9 +65,9 @@ public class Product {
         String name;
         int rate;
         int price;
-        Long categories;
+        Category categories;
 
-        public Builder (String name, int rate, int price, Long categories) {
+        public Builder (String name, int rate, int price, Category categories) {
             this.name = name;
             this.rate = rate;
             this.price = price;

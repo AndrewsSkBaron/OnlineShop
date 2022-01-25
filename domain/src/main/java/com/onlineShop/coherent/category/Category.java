@@ -16,7 +16,7 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "categories", targetEntity = Product.class)
+    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = false, mappedBy = "categories", targetEntity = Product.class)
     private List<Product> listOfProducts;
 
     public Category(String name) {

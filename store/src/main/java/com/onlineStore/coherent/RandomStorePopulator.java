@@ -27,7 +27,7 @@ public class RandomStorePopulator {
         ResponseEntity<Category[]> responseCategory =  httpClient.getRestTemplate().getForEntity(httpClient.getURL() + "/category", Category[].class);
         for (Category category : Objects.requireNonNull(responseCategory.getBody())) {
             for (int i = 0; i < 3; i++) {
-                Product product = new Product.Builder(popular.getProductName(category.getName()), popular.getRate(), popular.getPrice(), category.getId()).build();
+                Product product = new Product.Builder(popular.getProductName(category.getName()), popular.getRate(), popular.getPrice(), category).build();
                 httpClient.getRestTemplate().postForObject(httpClient.getURL() + "/product", product, Product.class);
             }
         }
