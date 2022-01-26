@@ -2,13 +2,10 @@ package com.onlineShop.coherent.service;
 
 
 import com.onlineShop.coherent.category.Category;
-import com.onlineShop.coherent.product.Product;
 import com.onlineShop.coherent.repository.CategoryRepo;
-import com.onlineShop.coherent.repository.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -34,7 +31,7 @@ public class CategoryService {
         return category;
     }
 
-    public Category getOneCategory(Long id) {
+    public Category getOneCategory(java.lang.Long id) {
         Category category = categoryRepo.findById(id).get();
         if (category == null) {
             System.out.println("Category not found");

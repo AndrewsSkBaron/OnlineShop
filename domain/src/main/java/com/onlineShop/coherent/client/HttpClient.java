@@ -2,15 +2,12 @@ package com.onlineShop.coherent.client;
 
 import com.onlineShop.coherent.order.Order;
 import com.onlineShop.coherent.product.Product;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.ExitCodeGenerator;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
+
 
 public class HttpClient {
     String URL = "http://localhost:8080";

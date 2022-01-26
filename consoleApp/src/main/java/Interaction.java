@@ -1,3 +1,5 @@
+import com.onlineShop.coherent.category.Category;
+import com.onlineShop.coherent.product.Product;
 import com.onlineStore.coherent.Store;
 import com.onlineStore.coherent.model.Sort;
 import com.onlineStore.coherent.multithreading.ThreadAddProductsInOrder;
@@ -6,8 +8,6 @@ import com.onlineStore.coherent.parser.Parser;
 import com.onlineStore.coherent.sort.SortByName;
 import com.onlineStore.coherent.sort.SortByPrice;
 import com.onlineStore.coherent.sort.SortByRate;
-import com.onlineShop.coherent.category.Category;
-import com.onlineShop.coherent.product.Product;
 
 import java.util.*;
 
@@ -34,7 +34,7 @@ public class Interaction {
     public void additionsStream(long number) {
         for (Product product : collectAllProductsInAnArray()) {
             if (product.getId() == number) {
-                ThreadAddProductsInOrder addProductsInOrder = new ThreadAddProductsInOrder(productsToOrder, product);
+                 ThreadAddProductsInOrder addProductsInOrder = new ThreadAddProductsInOrder(productsToOrder, product);
                 addProductsInOrder.start();
                 System.out.println("Product " + product.getName() + " Is already Added ");
                 System.out.println(addProductsInOrder.getState());
@@ -90,7 +90,7 @@ public class Interaction {
     }
 
     public void scannerUserInteraction() {
-        threadDeleteOrder.start();
+        //threadDeleteOrder.start();
         Scanner scanner = new Scanner(System.in);
 
         long number = 0;

@@ -15,7 +15,7 @@ public class Product {
     private int price;
 
     @ManyToOne
-    @JoinColumn(name = "categories_id", insertable = true)
+    @JoinColumn(name = "categories_id")
     private Category categories;
 
     public Product(Builder builder) {
@@ -23,7 +23,6 @@ public class Product {
         this.rate = builder.rate;
         this.price = builder.price;
         this.categories = builder.categories;
-
     }
 
     public Product() {
@@ -43,7 +42,7 @@ public class Product {
         return price;
     }
 
-    public Long getId() {
+    public java.lang.Long getId() {
         return id;
     }
 
@@ -51,14 +50,22 @@ public class Product {
         return rate;
     }
 
+    public Category getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Category categories) {
+        this.categories = categories;
+    }
+
     @Override
     public String toString() {
-        return "Product{" +
+        return
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", rate=" + rate +
-                ", price=" + price +
-                '}' + '\n';
+                ", price =" + price +
+                        '\n';
     }
 
     public static class Builder {
@@ -72,7 +79,6 @@ public class Product {
             this.rate = rate;
             this.price = price;
             this.categories = categories;
-
         }
 
         public Product build() {
