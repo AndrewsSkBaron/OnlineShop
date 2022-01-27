@@ -1,6 +1,6 @@
 package com.onlineStore.coherent;
 
-import category.Category;
+import com.onlineShop.coherent.category.Category;
 
 import java.util.List;
 
@@ -25,8 +25,8 @@ public class Store {
 
     @Override
     public String toString() {
-        return "Store { " +
-                "categories = " + '\n'+ categories + '\n' +" " +
+        return "Store{" +
+                "categories=" + categories +
                 '}';
     }
 }

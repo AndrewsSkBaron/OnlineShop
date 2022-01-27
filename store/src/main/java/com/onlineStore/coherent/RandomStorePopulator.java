@@ -1,59 +1,50 @@
 package com.onlineStore.coherent;
 
-import category.Beer;
-import category.Book;
-import category.Category;
-import category.Medicine;
+import com.onlineShop.coherent.category.Category;
+import com.onlineShop.coherent.client.HttpClient;
+import com.onlineShop.coherent.client.Random;
+import com.onlineShop.coherent.product.Product;
+import org.springframework.stereotype.Component;
 
-import com.github.javafaker.Faker;
-import database.DataBase;
-import product.Product;
+import java.util.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
+@Component
 public class RandomStorePopulator {
-    DataBase dataBase = new DataBase();
-    Faker faker = new Faker();
-    List<Product> productsOfBooks = new ArrayList<>();
-    List<Product> productsOfBeers = new ArrayList<>();
-    List<Product> productsOfMedicines = new ArrayList<>();
-    List<Category> categories = new ArrayList<>();
-    Store store = Store.getStore(categories);
+    HttpClient httpClient = new HttpClient();
+    Random popular = new Random();
 
     public void insertDataOfProducts() {
-        for (int i = 0; i < 3; i++) {
-            dataBase.dataInsertionTemplate(faker.book().title(), faker.number().numberBetween(1, 10), faker.number().numberBetween(1, 1000),"Book");
-            dataBase.dataInsertionTemplate(faker.beer().name(), faker.number().numberBetween(1, 10), faker.number().numberBetween(1, 1000),"Beer");
-            dataBase.dataInsertionTemplate(faker.medical().medicineName(), faker.number().numberBetween(1, 10), faker.number().numberBetween(1, 1000),"Medicine");
+        httpClient.postCategory();
+        for (Category category : Objects.requireNonNull(httpClient.getDataOfCategory())) {
+            for (int i = 0; i < 3; i++) {
+                Product product = new Product.Builder(popular.getProductName(category.getName()), popular.getRate(), popular.getPrice(), category).build();
+                httpClient.postProduct(product);
+            }
         }
     }
 
     public Store getRandomStore() {
-        Category book = new Book("Book", productsOfBooks);
-        Category beer = new Beer("Beer",  productsOfBeers);
-        Category medicine = new Medicine("Medicine",  productsOfMedicines);
+        List<Category> categories = new ArrayList<>();
+        List<Product> productsOfBooks = new ArrayList<>();
+        List<Product> productsOfBeers = new ArrayList<>();
+        List<Product> productsOfMedicines = new ArrayList<>();
 
-        dataBase.getDataOutProducts("Book", productsOfBooks);
-        dataBase.getDataOutProducts("Beer", productsOfBeers);
-        dataBase.getDataOutProducts("Medicine", productsOfMedicines);
-
-        categories.add(book);
-        categories.add(beer);
-        categories.add(medicine);
-
-        return store;
-    }
-
-
-    public void printInfoOfStore() {
-        System.out.println(store);
-        for (Category category : categories) {
-            System.out.println(category.getCategoryName() + " have");
-            System.out.println();
-            for (Product product : category.getListOfProducts()) {
-                System.out.println("  " + product);
+        for (Product product : Objects.requireNonNull(httpClient.getDataOfProducts())) {
+            if (product.getCategories().getName().equals("Book")) {
+                productsOfBooks.add(product);
+            } else if (product.getCategories().getName().equals("Beer")) {
+                productsOfBeers.add(product);
+            } else if (product.getCategories().getName().equals("Medicine")) {
+                productsOfMedicines.add(product);
+            } else {
+                break;
             }
         }
+
+        categories.add(new Category(productsOfBeers));
+        categories.add(new Category(productsOfBooks));
+        categories.add(new Category(productsOfMedicines));
+
+        return Store.getStore(categories);
     }
 }
