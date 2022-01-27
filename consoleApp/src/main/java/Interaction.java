@@ -90,7 +90,7 @@ public class Interaction {
     }
 
     public void scannerUserInteraction() {
-        //threadDeleteOrder.start();
+        threadDeleteOrder.start();
         Scanner scanner = new Scanner(System.in);
 
         long number = 0;

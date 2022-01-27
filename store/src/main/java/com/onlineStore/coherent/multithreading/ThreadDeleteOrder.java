@@ -20,7 +20,6 @@ public class ThreadDeleteOrder extends Thread {
                 Thread.currentThread().isInterrupted();
                 break;
             }
-            order.clear();
         }
         httpClient.deleteProducts();
     }

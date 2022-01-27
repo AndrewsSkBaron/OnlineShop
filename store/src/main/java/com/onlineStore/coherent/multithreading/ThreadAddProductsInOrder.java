@@ -8,12 +8,10 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class ThreadAddProductsInOrder extends Thread {
-    List<Product> productsToOrder;
     Product product;
     HttpClient httpClient = new HttpClient();
 
     public ThreadAddProductsInOrder(List<Product> productsToOrder, Product product) {
-        this.productsToOrder = productsToOrder;
         this.product = product;
     }
 
@@ -23,7 +21,6 @@ public class ThreadAddProductsInOrder extends Thread {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        productsToOrder.add(product);
         httpClient.addProductsToOrder(product);
     }
 

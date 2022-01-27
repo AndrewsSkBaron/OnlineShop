@@ -1,4 +1,4 @@
-package com.onlineStore.coherent;
+package com.onlineShop.coherent.client;
 
 import com.github.javafaker.Faker;
 
