@@ -21,7 +21,7 @@ public class ThreadAddProductsInOrder extends Thread {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        httpClient.addProductsToOrder(product);
+        httpClient.addOrder(product);
     }
 
     //генерирует случайное целое число от 1 до 30

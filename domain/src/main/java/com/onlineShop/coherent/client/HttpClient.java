@@ -8,43 +8,39 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.*;
+import java.util.Set;
 
 import static org.reflections.scanners.Scanners.SubTypes;
 
 
 public class HttpClient {
     private final String URL = "http://localhost:8080";
-    Random popular = new Random();
-
+    RestTemplate restTemplate = new RestTemplateBuilder().basicAuthentication("user", "user").build();
     Reflections reflections = new Reflections("com.onlineShop.coherent.category.categories");
     Set<Class<?>> subTypes = reflections.get(SubTypes.of(Category.class).asClass());
 
-    RestTemplate restTemplate = new RestTemplateBuilder().basicAuthentication("user", "user").build();
-
-
-    private List<Product> listOfProducts;
-
-    public void insertDataOfProducts() {
-
+    public void postCategory() {
         for (Class c : subTypes) {
             String s = c.getName().replace("com.onlineShop.coherent.category.categories.", "");
             restTemplate.postForObject(URL + "/category", new Category(s), Category.class);
         }
-        ResponseEntity<Category[]> responseCategory =  restTemplate.getForEntity(URL + "/category", Category[].class);
-        for (Category category : Objects.requireNonNull(responseCategory.getBody())) {
-            for (int i = 0; i < 3; i++) {
-                Product product = new Product.Builder(popular.getProductName(category.getName()), popular.getRate(), popular.getPrice(), category).build();
-                restTemplate.postForObject(URL + "/product", product, Product.class);
-            }
-        }
     }
+
+    public void postProduct(Product product) {
+        restTemplate.postForObject(URL + "/product", product, Product.class);
+    }
+
+    public Category[] getDataOfCategory() {
+        ResponseEntity<Category[]> responseCategory =  restTemplate.getForEntity(URL + "/category", Category[].class);
+        return responseCategory.getBody();
+    }
+
     public Product[] getDataOfProducts() {
         ResponseEntity<Product[]> responseProduct = restTemplate.getForEntity(URL + "/product", Product[].class);
         return responseProduct.getBody();
     }
 
-    public Order addProductsToOrder(Product product) {
+    public Order addOrder(Product product) {
         Order order = new Order();
         order.setProductPrice(product.getPrice());
         order.setProductName(product.getName());
@@ -52,21 +48,8 @@ public class HttpClient {
         return order;
     }
 
-    public void deleteProducts() {
+    public void deleteOrder() {
         restTemplate.delete(URL + "/order");
-    }
-
-    public void addProduct(List<Product> products) {
-        if (listOfProducts == null) {
-            listOfProducts = new ArrayList<>();
-        }
-        listOfProducts.addAll(products);
-    }
-
-    public void printProducts() {
-        for (Product product : listOfProducts) {
-            System.out.println(product);
-        }
     }
 
 }

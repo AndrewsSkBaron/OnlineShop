@@ -21,6 +21,6 @@ public class ThreadDeleteOrder extends Thread {
                 break;
             }
         }
-        httpClient.deleteProducts();
+        httpClient.deleteOrder();
     }
 }
