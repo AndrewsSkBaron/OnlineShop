@@ -1,18 +1,14 @@
-import category.Category;
+import com.onlineShop.coherent.category.Category;
+import com.onlineShop.coherent.product.Product;
 import com.onlineStore.coherent.Store;
 import com.onlineStore.coherent.model.Sort;
 import com.onlineStore.coherent.multithreading.ThreadAddProductsInOrder;
-
 import com.onlineStore.coherent.multithreading.ThreadDeleteOrder;
-
 import com.onlineStore.coherent.parser.Parser;
 import com.onlineStore.coherent.sort.SortByName;
 import com.onlineStore.coherent.sort.SortByPrice;
 import com.onlineStore.coherent.sort.SortByRate;
-import database.DataBase;
-import product.Product;
 
-import java.sql.SQLException;
 import java.util.*;
 
 public class Interaction {
@@ -35,18 +31,10 @@ public class Interaction {
         return productsAll;
     }
 
-    public void changeTheIdToDisplayTheList() {
-        int i = 1;
-        for (Product list : collectAllProductsInAnArray()) {
-            list.setIdProduct(i++);
-            System.out.println(list);
-        }
-    }
-
-    public void additionsStream (long number) {
+    public void additionsStream(long number) {
         for (Product product : collectAllProductsInAnArray()) {
-            if (product.getIdProduct() == number) {
-                ThreadAddProductsInOrder addProductsInOrder = new ThreadAddProductsInOrder(productsToOrder, product);
+            if (product.getId() == number) {
+                 ThreadAddProductsInOrder addProductsInOrder = new ThreadAddProductsInOrder(productsToOrder, product);
                 addProductsInOrder.start();
                 System.out.println("Product " + product.getName() + " Is already Added ");
                 System.out.println(addProductsInOrder.getState());
@@ -90,7 +78,6 @@ public class Interaction {
         }
 
         Collections.sort(sortProductsAll, sortByName.thenComparing(sortByPrice).thenComparing(sortByRate));
-
         return new ArrayList<>(sortProductsAll);
     }
 
@@ -102,9 +89,8 @@ public class Interaction {
         }
     }
 
-    public void scannerUserInteraction() throws SQLException {
+    public void scannerUserInteraction() {
         threadDeleteOrder.start();
-        DataBase dataBase = new DataBase();
         Scanner scanner = new Scanner(System.in);
 
         long number = 0;
@@ -132,7 +118,6 @@ public class Interaction {
                     break;
                 case "quit":
                     threadDeleteOrder.interrupt();
-                    dataBase.dropDataBaseTables();
                     System.out.println();
                     System.out.println("Bye Bye");
                     break quit;

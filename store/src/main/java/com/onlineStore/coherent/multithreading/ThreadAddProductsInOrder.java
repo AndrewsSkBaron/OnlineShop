@@ -1,18 +1,17 @@
 package com.onlineStore.coherent.multithreading;
 
-import database.DataBase;
-import product.Product;
+
+import com.onlineShop.coherent.product.Product;
+import com.onlineShop.coherent.client.HttpClient;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class ThreadAddProductsInOrder extends Thread {
-    List<Product> productsToOrder;
     Product product;
-    DataBase dataBase = new DataBase();
+    HttpClient httpClient = new HttpClient();
 
     public ThreadAddProductsInOrder(List<Product> productsToOrder, Product product) {
-        this.productsToOrder = productsToOrder;
         this.product = product;
     }
 
@@ -22,9 +21,7 @@ public class ThreadAddProductsInOrder extends Thread {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        productsToOrder.add(product);
-        dataBase.addProductsInOrderTable(product);
-        System.out.println(productsToOrder);
+        httpClient.addOrder(product);
     }
 
     //генерирует случайное целое число от 1 до 30
